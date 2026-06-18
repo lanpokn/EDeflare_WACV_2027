@@ -161,7 +161,7 @@ Due to space limitations, further details have been provided in the \textbf{Appe
 
 
 \subsection{Datasets \& Benchmark}
-The \emph{\ours}~benchmark comprises three complementary datasets (Table~\ref{tab:dataset_overview}):
+The \emph{\ours}~benchmark comprises three complementary datasets:
 \begin{itemize}
     \item \textbf{\underline{E-Flare2.7K}:} Our large-scale \emph{simulated} dataset (Sec.~\ref{ssec:simulator}) with $2.7$K samples ($2{,}545$ training, $175$ testing). Light-source positions and flare patterns are fully randomized; see the \textbf{Appendix} for examples.
 
@@ -170,6 +170,7 @@ The \emph{\ours}~benchmark comprises three complementary datasets (Table~\ref{ta
     \item \textbf{\underline{DSEC-Flare}:} Curated sequences from the public DSEC dataset~\cite{gehrig2021dsec} exhibiting natural flare corruption in driving scenarios. As paired data in unconstrained conditions are infeasible, this dataset serves exclusively for qualitative real-world evaluation.
 \end{itemize}
 
+\iffalse
 \begin{table}[!t]
     \centering
     \small
@@ -187,4 +188,5 @@ The \emph{\ours}~benchmark comprises three complementary datasets (Table~\ref{ta
     \end{tabular}
     \vspace{-0.2cm}
 \end{table}
+\fi
 No single dataset can simultaneously provide large-scale training, high-fidelity paired validation, and real-world generalization evidence, given acquisition constraints inherent to event cameras. Some representative data samples are in \cref{fig:2x2}. Further details and data examples are provided in the \textbf{Appendix}.

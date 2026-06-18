@@ -426,6 +426,39 @@ Fig.~\ref{APfig:supp_3} investigates model generalization under stress tests: ex
     \label{APfig:supp_3}
 \end{figure}
 
+\subsection{Downstream Validation on 3D Reconstruction}
+\label{app:3d_reconstruction}
+
+We further evaluate \textbf{E-Deflare} on event-based 3D reconstruction. Since no standard benchmark with flare artifacts exists for this task, we synthesize paired event streams from the LEGO scene of NeRF-synthetic~\cite{mildenhall2021nerf}, following the event simulation protocol of PECS~\cite{han2024physical}. We reconstruct a 3D scene from each event stream using Event3DGS~\cite{han2024event}, render novel views, and compare them with the clean reference using background color normalization.
+
+\begin{table}[H]
+    \centering
+    \caption{\textbf{Downstream task comparisons} for event-based 3D reconstruction. We use Event3DGS~\cite{han2024event} to reconstruct scenes and evaluate novel view synthesis. $\uparrow$: higher is better.}
+    \label{tab:app_3dgs_quant}
+    \small
+    \resizebox{0.62\textwidth}{!}{%
+    \begin{tabular}{r|c|ccc|c}
+    \toprule
+    \textbf{Metric} & \textcolor{gray}{Original} & EFR & PFD-A & PFD-B & \textbf{Ours}
+    \\
+    \midrule
+    PSNR $\uparrow$ & \cellcolor{gray!20}\textcolor{gray}{$13.72$} & \cellcolor{ev_red!20}$13.74$ & $13.11$ & $13.32$ & \cellcolor{ev_blue!20}$\mathbf{13.78}$
+    \\
+    SSIM $\uparrow$ & \cellcolor{gray!20}\textcolor{gray}{$0.765$} & $0.741$ & \cellcolor{ev_red!20}$0.743$ & $0.734$ & \cellcolor{ev_blue!20}$\mathbf{0.792}$
+    \\
+    \bottomrule
+    \end{tabular}}
+\end{table}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.72\textwidth]{figures/3D_reconstruction.pdf}
+    \caption{\textbf{Downstream task comparisons} for event-based 3D reconstruction. We visualize rendered views from 3D scenes reconstructed using different de-flaring outputs.}
+    \label{fig:app_3dgs_qual}
+\end{figure}
+
+The results show that naive de-flaring can harm 3D reconstruction, while our de-flared events provide a cleaner input and improve SSIM over the original flare-corrupted stream.
+
 \subsection{Video Demonstrations}
 
 Since event data is inherently temporal, static images cannot fully convey the dynamic quality of the restoration. We provide three video demonstrations attached to the supplementary material: \texttt{demo1.mp4} (E-Flare2.7K), \texttt{demo2.mp4} (E-Flare-R), and \texttt{demo3.mp4} (DSEC-Flare).
