@@ -161,13 +161,13 @@ Due to space limitations, further details have been provided in the \textbf{Appe
 
 
 \subsection{Datasets \& Benchmark}
-The \emph{\ours}~benchmark comprises three complementary datasets:
+The \emph{\ours}~benchmark comprises three complementary datasets, each serving a distinct role:
 \begin{itemize}
-    \item \textbf{\underline{E-Flare2.7K}:} Our large-scale \emph{simulated} dataset (Sec.~\ref{ssec:simulator}) with $2.7$K samples ($2{,}545$ training, $175$ testing). Light-source positions and flare patterns are fully randomized; see the \textbf{Appendix} for examples.
+    \item \textbf{\underline{E-Flare2.7K}:} A large-scale \emph{simulated} dataset for training and controlled quantitative testing, with $2.7$K samples ($2{,}545$ training, $175$ testing). Light-source positions and flare patterns are randomized; see the \textbf{Appendix} for examples.
 
-    \item \textbf{\underline{E-Flare-R}:} Our \emph{real-world} test set (Sec.~\ref{ssec:real_data_acquisition}) captured in controlled dark environments to isolate pure flare characteristics. Corrupted inputs include optical artifacts (surface glare, internal reflections~\cite{shi2023identifying}) to be removed. Provides $150$ samples.
+    \item \textbf{\underline{E-Flare-R}:} A paired \emph{real-world} test set for high-fidelity validation under controlled acquisition, providing $150$ samples with optical artifacts such as surface glare and internal reflections~\cite{shi2023identifying}.
 
-    \item \textbf{\underline{DSEC-Flare}:} Curated sequences from the public DSEC dataset~\cite{gehrig2021dsec} exhibiting natural flare corruption in driving scenarios. As paired data in unconstrained conditions are infeasible, this dataset serves exclusively for qualitative real-world evaluation.
+    \item \textbf{\underline{DSEC-Flare}:} Curated sequences from the public DSEC dataset~\cite{gehrig2021dsec} exhibiting natural flare corruption in driving scenarios, used for qualitative real-world evaluation where paired ground truth is unavailable.
 \end{itemize}
 
 \iffalse
@@ -189,4 +189,4 @@ The \emph{\ours}~benchmark comprises three complementary datasets:
     \vspace{-0.2cm}
 \end{table}
 \fi
-No single dataset can simultaneously provide large-scale training, high-fidelity paired validation, and real-world generalization evidence, given acquisition constraints inherent to event cameras. Some representative data samples are in \cref{fig:2x2}. Further details and data examples are provided in the \textbf{Appendix}.
+Together, these datasets cover large-scale learning, paired real-world evaluation, and qualitative evidence in natural driving scenes, which cannot be obtained from a single acquisition source. Some representative data samples are in \cref{fig:2x2}. Further details and data examples are provided in the \textbf{Appendix}.
