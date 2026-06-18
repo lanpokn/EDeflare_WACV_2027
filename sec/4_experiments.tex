@@ -1,8 +1,5 @@
 \begin{table*}[!tbp]
     \centering
-    \caption{\textbf{Quantitative comparisons on the E-Flare2.7K test set}. We evaluate against five event-based de-flaring baselines using event-level and voxel-level metrics, respectively. Cell backgrounds highlight the \colorbox{gray!20}{raw baseline}, \colorbox{ev_red!20}{second-best}, and \colorbox{ev_blue!20}{best} value per metric. The final row shows the percentage improvement of our method over the second-best ($\downarrow$: lower is better, $\uparrow$: higher is better). Ch. = Chamfer Distance; Gau. = Gaussian Distance; PM2/PM4 = Pooled MSE at scales 2/4.}
-    \vspace{-0.3cm}
-    \label{tab:main_sim_quant}
     \small
     \resizebox{\textwidth}{!}{
     \begin{tabular}{lcccccccc}
@@ -27,6 +24,9 @@
     \\
     \bottomrule
     \end{tabular}}
+    \vspace{-0.15cm}
+    \caption{\textbf{Quantitative comparisons on the E-Flare2.7K test set}. We evaluate against five event-based de-flaring baselines using event-level and voxel-level metrics, respectively. Cell backgrounds highlight the \colorbox{gray!20}{raw baseline}, \colorbox{ev_red!20}{second-best}, and \colorbox{ev_blue!20}{best} value per metric. The final row shows the percentage improvement of our method over the second-best ($\downarrow$: lower is better, $\uparrow$: higher is better). Ch. = Chamfer Distance; Gau. = Gaussian Distance; PM2/PM4 = Pooled MSE at scales 2/4.}
+    \label{tab:main_sim_quant}
     \vspace{-0.3cm}
 \end{table*}
 
@@ -80,9 +80,6 @@ Our model, trained \emph{solely} on simulated data, generalizes zero-shot to rea
 
 \begin{table*}[!tbp]
     \centering
-    \caption{\textbf{Quantitative comparisons on the E-Flare-R dataset}. We evaluate against five event-based de-flaring baselines using event-level and voxel-level metrics, respectively. Cell backgrounds highlight the \colorbox{gray!20}{raw baseline}, \colorbox{ev_red!20}{second-best}, and \colorbox{ev_blue!20}{best} value per metric. The final row shows the percentage improvement of our method over the second-best ($\downarrow$: lower is better, $\uparrow$: higher is better). Ch. = Chamfer Distance; Gau. = Gaussian Distance; PM2/PM4 = Pooled MSE at scales 2/4.}
-    \vspace{-0.3cm}
-    \label{tab:main_real_quant}
     \small
     \resizebox{\textwidth}{!}{
     \begin{tabular}{lcccccccc}
@@ -107,6 +104,9 @@ Our model, trained \emph{solely} on simulated data, generalizes zero-shot to rea
     \\
     \bottomrule
     \end{tabular}}
+    \vspace{-0.15cm}
+    \caption{\textbf{Quantitative comparisons on the E-Flare-R dataset}. We evaluate against five event-based de-flaring baselines using event-level and voxel-level metrics, respectively. Cell backgrounds highlight the \colorbox{gray!20}{raw baseline}, \colorbox{ev_red!20}{second-best}, and \colorbox{ev_blue!20}{best} value per metric. The final row shows the percentage improvement of our method over the second-best ($\downarrow$: lower is better, $\uparrow$: higher is better). Ch. = Chamfer Distance; Gau. = Gaussian Distance; PM2/PM4 = Pooled MSE at scales 2/4.}
+    \label{tab:main_real_quant}
     \vspace{-0.3cm}
 \end{table*}
 
@@ -130,9 +130,6 @@ Figs.~\ref{fig:qualitative_sim}--\ref{fig:qualitative_real} further confirm thes
 
 \begin{table*}[!tbp]
     \centering
-    \caption{\textbf{Ablation study on the E-Flare-R dataset}. We evaluate three variants to analyze our core design choices. The final row shows the improvement of our full model over the best ablated variant ($\downarrow$: lower is better, $\uparrow$: higher is better). Ch. = Chamfer Distance; Gau. = Gaussian Distance; PM2/PM4 = Pooled MSE at scales 2/4.}
-    \vspace{-0.3cm}
-    \label{tab:ablation_main}
     \small
     \resizebox{\textwidth}{!}{%
     \begin{tabular}{lcccccccc}
@@ -156,6 +153,9 @@ Figs.~\ref{fig:qualitative_sim}--\ref{fig:qualitative_real} further confirm thes
     \bottomrule
     \end{tabular}%
     }%
+    \vspace{-0.15cm}
+    \caption{\textbf{Ablation study on the E-Flare-R dataset}. We evaluate three variants to analyze our core design choices. The final row shows the improvement of our full model over the best ablated variant ($\downarrow$: lower is better, $\uparrow$: higher is better). Ch. = Chamfer Distance; Gau. = Gaussian Distance; PM2/PM4 = Pooled MSE at scales 2/4.}
+    \label{tab:ablation_main}
 \vspace{-0.2cm}
 \end{table*}
 
