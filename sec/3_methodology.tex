@@ -3,7 +3,7 @@
 This section introduces \emph{\ours}, a physics-guided approach for removing lens flare in event cameras. We derive a \textbf{forward model} of flare formation, whose exact inversion is intractable (Sec.~\ref{ssec:forward_model}), motivating a learning-based solution. Building on this, we develop a two-stage strategy: a \textbf{physics-driven simulator} for large-scale paired training data (Sec.~\ref{ssec:simulator}) and a \textbf{real-world acquisition system} for robust validation (Sec.~\ref{ssec:real_data_acquisition}). We then define the learning objective and restoration network. The overview framework is illustrated in Fig.~\ref{fig:methodology-flowchart}.
 
 
-\begin{figure*}[t]
+\begin{figure*}[!t]
     \centering
     \includegraphics[width=\textwidth]{figures/pipeline.pdf}
     \vspace{-0.5cm}
@@ -143,7 +143,7 @@ Validation faces the practical impossibility of capturing \emph{perfectly aligne
 
 \textbf{Event-Specific Alignment Strategy.} Unlike frame-based cameras, event cameras possess microsecond-level temporal sensitivity, making precise alignment difficult if either the camera or the scene moves; even slight mechanical errors during filter removal cause misalignment. To address this, we fix the camera and illuminate with high-frequency flickering light sources (\eg, LED arrays). Spatial alignment follows automatically; temporal alignment is achieved by synchronizing streams to the flickering pattern. This yields a small-scale but high-fidelity real-world validation set.
 
-\begin{figure}[t]
+\begin{figure}[!t]
     \centering
     \includegraphics[width=\columnwidth]{figures/2x2.pdf}
     \vspace{-0.65cm}
@@ -170,7 +170,7 @@ The \emph{\ours}~benchmark comprises three complementary datasets (Table~\ref{ta
     \item \textbf{\underline{DSEC-Flare}:} Curated sequences from the public DSEC dataset~\cite{gehrig2021dsec} exhibiting natural flare corruption in driving scenarios. As paired data in unconstrained conditions are infeasible, this dataset serves exclusively for qualitative real-world evaluation.
 \end{itemize}
 
-\begin{table}[t]
+\begin{table}[!t]
     \centering
     \small
     \caption{Overview of the proposed datasets in \emph{\ours}~benchmark.}
