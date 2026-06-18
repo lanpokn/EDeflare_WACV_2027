@@ -25,7 +25,7 @@ To model lens flare in event streams, we establish a physical model of the \emph
 \begin{equation}
     \mathbf{I}_{\mathrm{gt}}(x, y, t) = \mathbf{I}_{\mathrm{bg}}(x, y, t) + \mathbf{I}_{\mathrm{light}}(x, y, t)~.
 \end{equation}
-In contrast, a \textbf{real lens} $\mathcal{L}_{\mathrm{real}}$ introduces reflections and scattering that corrupt this formation. While the background remains largely unaffected, the bright light source produces a spatially expansive, structured flare component $\mathbf{I}_{\textcolor{ev_red}{\mathrm{\mathbf{f}}}}$ that subsumes both the distorted direct illumination and the additional scattered energy, thereby replacing $\mathbf{I}_{\mathrm{light}}$ in the observed irradiance. The  observed irradiance $\mathbf{I}_{\mathrm{ob}}$ can thus be approximated by a linear superposition in the intensity domain~\cite{dai2022flare7k,wu2021train,dai2024flare7k++}. This process is formulated as follows:
+In contrast, a \textbf{real lens} $\mathcal{L}_{\mathrm{real}}$ introduces reflections and scattering that corrupt this formation. While the background remains largely unaffected, the bright light source produces a spatially expansive, structured flare component $\mathbf{I}_{\textcolor{ev_red}{\mathrm{\mathbf{f}}}}$ that subsumes both the distorted direct illumination and the additional scattered energy, thereby replacing $\mathbf{I}_{\mathrm{light}}$ in the observed irradiance. The observed irradiance $\mathbf{I}_{\mathrm{ob}}$ can thus be approximated by a linear superposition in the intensity domain~\cite{dai2022flare7k,wu2021train,dai2024flare7k++}. This process is formulated as follows:
 \begin{equation}
     \mathbf{I}_{\mathrm{ob}}(x, y, t) \approx \mathbf{I}_{\mathrm{bg}}(x, y, t) + \mathbf{I}_{\textcolor{ev_red}{\mathrm{\mathbf{f}}}}(x, y, t)~.
 \label{eq:image_superposition_final}
@@ -37,7 +37,7 @@ An event camera sensor $\mathcal{S}_{\mathrm{evt}}(\cdot)$ operates on this corr
     |L(t_i) - L(t_{\mathrm{last}})| \ge c~,
     \label{eq:event_threshold_condition}
 \end{equation}
-where $t_{\mathrm{last}}$ denotes the timestamp of the preceding event at that pixel. The polarity $p_i = \mathrm{sign}(L(t_i) - L(t_{\mathrm{last}})) \in \{+1, -1\}$ encodes the direction of the intensity change. The resulting event stream $\mathbf{E}(t)$ can be represented as :
+where $t_{\mathrm{last}}$ denotes the timestamp of the preceding event at that pixel. The polarity $p_i = \mathrm{sign}(L(t_i) - L(t_{\mathrm{last}})) \in \{+1, -1\}$ encodes the direction of the intensity change. The resulting event stream $\mathbf{E}(t)$ can be represented as:
 \begin{equation}
     \mathbf{E}(t) = \mathcal{S}_{\mathrm{evt}}(\mathbf{I}_{\mathrm{ob}}(t)) = \sum\nolimits_{i} p_i \delta(t - t_i)~,
     \label{eq:event_stream_definition}
@@ -62,7 +62,7 @@ where $\xi(t) \triangleq d\varepsilon(t)/dt$ is the \emph{residual rate}. Eq.~\r
     \frac{dL_{\mathrm{ob}}(t)}{dt} = w_{\mathrm{bg}}(t) \frac{dL_{\mathrm{bg}}(t)}{dt} + w_{\textcolor{ev_red}{\mathrm{\mathbf{f}}}}(t) \frac{dL_{\textcolor{ev_red}{\mathrm{\mathbf{f}}}}(t)}{dt}~,
     \label{eq:log_derivative_mixing}
 \end{equation}
-where $L_{\mathrm{bg}}(t) \triangleq \log \mathbf{I}_{\mathrm{bg}}(t)$ and $L_{\textcolor{ev_red}{\mathrm{\mathbf{f}}}}(t) \triangleq \log \mathbf{I}_{\textcolor{ev_red}{\mathrm{\mathbf{f}}}}(t)$, and the  coefficients are defined as:
+where $L_{\mathrm{bg}}(t) \triangleq \log \mathbf{I}_{\mathrm{bg}}(t)$ and $L_{\textcolor{ev_red}{\mathrm{\mathbf{f}}}}(t) \triangleq \log \mathbf{I}_{\textcolor{ev_red}{\mathrm{\mathbf{f}}}}(t)$, and the coefficients are defined as:
 \begin{equation}
     w_{\mathrm{bg}}(t) = \frac{\mathbf{I}_{\mathrm{bg}}(t)}{\mathbf{I}_{\mathrm{bg}}(t) + \mathbf{I}_{\textcolor{ev_red}{\mathrm{\mathbf{f}}}}(t)}~,~~ w_{\textcolor{ev_red}{\mathrm{\mathbf{f}}}}(t) = 1-w_{\mathrm{bg}}(t)~.
     \label{eq:weights_definition}
@@ -86,7 +86,7 @@ where $\xi_{\mathrm{bg}}(t)$ and $\xi_{\textcolor{ev_red}{\mathrm{\mathbf{f}}}}(
     \mathbf{E}_{\mathrm{ob}}(t) = \mathcal{S}_{\mathrm{evt}}\left( \exp\left( \int_{0}^{t} \Phi(\tau) \, d\tau + L_{\mathrm{ob}}(0) \right) \right)~,
     \label{eq:full_forward_model}
 \end{equation}
-where the integrand $\Phi(\tau)$ represents :
+where the integrand $\Phi(\tau)$ represents:
 \begin{equation}
     \begin{aligned}
     \Phi(\tau) ={}&
@@ -114,7 +114,7 @@ As illustrated in Fig.~\ref{fig:methodology-flowchart}, the pipeline operates in
 $\bullet$~\textbf{Stage 1: Pure Flare Simulation in Events.}
 The first stage synthesizes pure event streams for the light source as if captured through both a non-ideal lens ($\mathbf{E}_{\textcolor{ev_red}{\mathrm{\mathbf{f}}}}$) and an ideal lens ($\mathbf{E}_{\mathrm{light}}$). We use Flare7K++ \cite{dai2024flare7k++} image assets, which provide \emph{paired} static flare patterns and clean light sources, but simple image transformations cannot reproduce realistic temporal dynamics. 
 
-To address this, we decompose the flare into two components. For the \textbf{scattering flare}, whose pattern varies smoothly with the light source's position, we generate dynamic videos by applying complex temporal effects to the static Flare7K++ assets. These include random spatial transformations and intensity flickering. For the  \textbf{reflective flare}, whose intricate patterns change drastically and cannot be realistically interpolated from static images, we use a dedicated \textbf{Reflective Flare Simulation} module to synthesize its dynamic intensity video. The final video sums both components. These are processed by a standard event simulator~\cite{lin2022dvs} to produce $\mathbf{E}_{\textcolor{ev_red}{\mathrm{\mathbf{f}}}}$ and $\mathbf{E}_{\mathrm{light}}$.
+To address this, we decompose the flare into two components. For the \textbf{scattering flare}, whose pattern varies smoothly with the light source's position, we generate dynamic videos by applying complex temporal effects to the static Flare7K++ assets. These include random spatial transformations and intensity flickering. For the \textbf{reflective flare}, whose intricate patterns change drastically and cannot be realistically interpolated from static images, we use a dedicated \textbf{Reflective Flare Simulation} module to synthesize its dynamic intensity video. The final video sums both components. These are processed by a standard event simulator~\cite{lin2022dvs} to produce $\mathbf{E}_{\textcolor{ev_red}{\mathrm{\mathbf{f}}}}$ and $\mathbf{E}_{\mathrm{light}}$.
 
 
 $\bullet$~\textbf{Stage 2: Physics-Driven Event Composition.}
@@ -130,7 +130,7 @@ Using this operator, we construct both the flare-corrupted input and its corresp
 The required data assets are assembled accordingly. Real-world background events $\mathbf{E}_{\mathrm{bg}}$ with diverse real-world motion are sampled from DSEC~\cite{gehrig2021dsec}, while intensity profiles for retention probability are obtained from Stage 1's synthetic outputs ($\mathbf{I}_{\textcolor{ev_red}{\mathrm{\mathbf{f}}}}$ and $\mathbf{I}_{\mathrm{light}}$) and estimated from the available event data ($\mathbf{I}_{\mathrm{bg}}$), all of which are sufficient for the probabilistic PNL-ES formulation.
 
 
-This pipeline yields a large-scale, physically grounded training dataset. By anchoring synthesis to real background events (which dominate event density), we  mitigate the sim-to-real gap of fully synthetic systems. As validated below, this facilitates generalization to \emph{real-world} data.
+This pipeline yields a large-scale, physically grounded training dataset. By anchoring synthesis to real background events (which dominate event density), we mitigate the sim-to-real gap of fully synthetic systems. As validated below, this facilitates generalization to \emph{real-world} data.
 
 
 
@@ -141,7 +141,7 @@ Validation faces the practical impossibility of capturing \emph{perfectly aligne
 
 \textbf{Capture Setup.} We mount a removable optical filter (\eg, six-line star filters) in front of the lens (Fig.~\ref{fig:methodology-flowchart}). The protocol involves two consecutive recordings of the same scene: one with the filter in place to capture the flare-corrupted stream $\mathbf{E}_{\mathrm{ob}}$, and another immediately after its removal to acquire the near-clean reference $\tilde{\mathbf{E}}_{\mathrm{gt}}$. Multiple filter types introduce diversity in flare patterns.
 
-\textbf{Event-Specific Alignment Strategy.} Unlike frame-based cameras, event cameras possess microsecond-level temporal sensitivity, making precise alignment difficult if either the camera or the scene moves; Therefore, there is currently no such paired dataset. To address this, we fix the camera and illuminate with high-frequency flickering light sources (\eg, LED arrays). Spatial alignment follows automatically; temporal alignment is achieved by synchronizing streams to the flickering pattern. This yields a small-scale but high-fidelity real-world validation set.
+\textbf{Event-Specific Alignment Strategy.} Unlike frame-based cameras, event cameras possess microsecond-level temporal sensitivity, making precise alignment difficult if either the camera or the scene moves; this is why no such paired dataset currently exists. To address this, we fix the camera and illuminate with high-frequency flickering light sources (\eg, LED arrays). Spatial alignment follows automatically; temporal alignment is achieved by synchronizing streams to the flickering pattern. This yields a small-scale but high-fidelity real-world validation set.
 
 \begin{figure}[!t]
     \centering

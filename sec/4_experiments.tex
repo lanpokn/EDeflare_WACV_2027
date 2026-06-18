@@ -93,7 +93,7 @@ Our model, trained \emph{solely} on simulated data, generalizes zero-shot to rea
     \\
     \textcolor{ev_red}{$\bullet$}~PFD-A \cite{shi2024polarity} & \cellcolor{ev_red!20}$1.7642$ & \cellcolor{ev_red!20}$0.7067$ & $0.7924$ & $0.3341$ & $0.3182$ & \cellcolor{ev_red!20}$0.2386$ & \cellcolor{ev_red!20}$0.3081$ & \cellcolor{ev_red!20}$0.3283$
     \\
-    \textcolor{ev_red}{$\bullet$}~PFD-B \cite{shi2024polarity} & $2.0838$ & $0.8504$ & \cellcolor{ev_red!20}$0.2759$ & $0.1121$ & $0.1049 $& $0.0300$ & $0.0717$ & $0.0880$
+    \textcolor{ev_red}{$\bullet$}~PFD-B \cite{shi2024polarity} & $2.0838$ & $0.8504$ & \cellcolor{ev_red!20}$0.2759$ & $0.1121$ & $0.1049$ & $0.0300$ & $0.0717$ & $0.0880$
     \\
     \textcolor{ev_red}{$\bullet$}~Voxel Transform & $1.9535$ & $0.8167$ & $0.3140$ & \cellcolor{ev_red!20}$0.0964$ & \cellcolor{ev_red!20}$0.0836$ & $0.1036$ & $0.2729$ & $0.3255$
     \\
@@ -162,7 +162,7 @@ Figs.~\ref{fig:qualitative_sim}--\ref{fig:qualitative_real} confirm this trend: 
 We ablate three design variants on E-Flare-R (Table~\ref{tab:ablation_main}):
 \textbf{(1)} \emph{No Light}: ground truth incorrectly removes the light source, treating de-flaring as complete elimination;
 \textbf{(2)} \emph{Simple}: direct additive fusion, ignoring irradiance superposition physics;
-\textbf{(3)} \emph{Full Model (Ours)}: full physics-guided synthesis  as described above.
+\textbf{(3)} \emph{Full Model (Ours)}: full physics-guided synthesis as described above.
 % \textbf{(4)} \emph{Full Model + Jitter}: our method with additional temporal jitter augmentation to test whether gains stem from physical modeling or stochastic augmentation.
 
 The results reveal a clear performance hierarchy.
