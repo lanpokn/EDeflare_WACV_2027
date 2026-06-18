@@ -1,3 +1,136 @@
+Review for Learning to Remove Lens Flare in Event Camera
+Official Reviewby Reviewer uciQ21 Apr 2026, 22:38 (modified: 25 May 2026, 16:03)Program Chairs, Senior Area Chairs, Area Chairs, Reviewers, AuthorsRevisions
+Choose The Contribution Type You Are Using For Your Review: Applied/Systems
+Justify The Above Choice:
+I agree
+
+Paper Summary:
+The paper studies lens flare removal in event cameras by modeling flare as a non-linear suppression in the log-intensity domain. It introduces a physics-based simulation pipeline to generate paired training data, along with a synthetic dataset and real benchmarks, and proposes a learning-based model (E-DeflareNet) that evaluated on both synthetic and real data.
+
+Paper Strengths:
+Meaningful problem setting: The paper addresses lens flare in event cameras, an underexplored but practically relevant issue that can degrade downstream perception tasks.
+
+Data generation contribution: The creation of a synthetic dataset along with real-world benchmarks provides useful resources for studying flare effects in event-based vision.
+
+End-to-end pipeline: The combination of simulation, dataset construction, and a learning-based restoration model forms a coherent pipeline, making the contribution more system-level than purely algorithmic.
+
+Evaluation across domains: The method is evaluated on both synthetic and real data, suggesting an attempt to bridge the gap between controlled simulation and real-world scenarios.
+
+Major Weaknesses:
+In Section 3.3, the paper does not present a physically grounded model for spatially variant flare. Instead, the simulation relies on random transformations, which fail to capture the geometry-dependent behavior of real lens flare.
+
+Although the paper emphasizes that lens flare exhibits structured, temporally correlated patterns distinct from noise or flicker, the selected baselines (EFR, PFD) are designed for stochastic noise or global flicker. This mismatch makes the comparison less meaningful and likely biases results in favor of the proposed method.
+
+The practical effectiveness and dataset utility remain unclear. The method appears to suppress large flare regions by removing events, potentially discarding meaningful scene information, rather than recovering underlying structure, raising concerns about its general applicability.
+
+Additional experiments are required. In particular, evaluations on scenes with rich background content are missing. Most qualitative examples involve regions with limited structure, making it difficult to assess whether the method works beyond simply removing events in low-information areas.
+
+DSEC-Flare results do not clearly demonstrate meaningful improvement. It is unclear whether the proposed PNL-ES effectively recovers background intensity in practice.
+
+The corruption-to-clean training paradigm is well established. It is unclear whether the claim of being the “first” pipeline is justified, and the novelty at the framework level appears overstated.
+
+Minor Weaknesses:
+The arrow directions in Figure 2 are not clearly defined. It is unclear whether they represent event polarity or suppression behavior, which makes the illustration difficult to interpret.
+
+Preliminary Recommendation: 1: Reject
+Justification Of Preliminary Recommendation:
+The paper addresses a relevant and underexplored problem in event-based vision, namely lens flare removal, and proposes a complete pipeline including simulation, dataset construction, and a learning-based restoration model. The system-level contribution, particularly the attempt to build a data generation pipeline and benchmark, is meaningful for the community.
+
+However, several issues limit its overall impact. The simulation pipeline, which is central to the system, is not sufficiently grounded in physical modeling and relies on heuristic approximations without proper validation. This raises concerns about the reliability of the generated data and its ability to generalize to real-world scenarios. The evaluation is also not fully convincing: baseline comparisons are not well aligned with the problem, and real-world validation (e.g., DSEC-Flare) does not clearly demonstrate practical improvements. Additionally, qualitative results suggest that the method may primarily suppress events rather than recover meaningful scene information.
+
+Overall, while the problem is important and the system-level effort is appreciated, limitations in simulation fidelity, evaluation rigor, and demonstrated practical effectiveness reduce confidence in the real-world applicability of the proposed approach.
+
+Suggestions For Rebuttal:
+Please refer to weakness.
+
+Ethics Review Flag: No
+Ethics Review Flag Justification:
+This work focuses on event-based vision and lens flare removal, involving standard sensor data processing and simulation. It does not raise identifiable ethical concerns. Therefore, an ethics review is not required.
+
+Confidence Level: 5: Expert - The reviewer is an authority in the specific subfield addressed by the paper. They are extremely confident in their evaluation and understanding of the work.
+Paper review
+Official Reviewby Reviewer B3Wd21 Apr 2026, 14:31 (modified: 25 May 2026, 14:25)Program Chairs, Senior Area Chairs, Area Chairs, Reviewers, AuthorsRevisions
+Choose The Contribution Type You Are Using For Your Review: Datasets/Benchmarks
+Justify The Above Choice:
+Although the paper includes a physics-motivated formulation and a learning-based restoration model, its most distinctive and enduring contribution is the introduction of the first comprehensive benchmark for event-camera de-flaring, including a large-scale simulated dataset, the first paired real-world test set, and a curated real-data evaluation set. The restoration network itself is intentionally standard, so the paper’s main impact is better characterized by its benchmark and data-generation pipeline than by algorithmic novelty alone.
+
+Paper Summary:
+This paper introduces E-Deflare, the first systematic framework for removing lens flare from event camera data.The authors establish a theoretical foundation by deriving a physics-grounded forward model that explains how lens flare results in a non-linear suppression of valid background events within the logarithmic event domain. Recognizing that capturing perfectly aligned real-world paired data for training is infeasible due to the event camera's microsecond-level temporal sensitivity, the authors propose a two-stage physics-driven simulation pipeline where A key component of this pipeline is the Probabilistic Non-Linear Event Suppression (PNL-ES) operator, which models the non-linear interaction between flare and background events more accurately than simple linear superposition.
+
+Building on this, the paper contributes the E-Deflare Benchmark, comprising three complementary datasets:
+
+E-Flare2.7K (a large-scale simulated training set)
+E-Flare-R (the first paired real-world test set captured with a novel optical system)
+DSEC-Flare (curated real-world sequences for qualitative evaluation) Using this benchmark, the authors train E-DeflareNet, a standard residual 3D U-Net, demonstrating that a physically grounded data generation strategy is sufficient for achieving state-of-the-art restoration and improving performance in downstream tasks.
+Paper Strengths:
+Problem Novelty and Practical Significance The paper identifies and addresses "lens flare" as a distinct, structured corruption in event cameras, a critical yet overlooked problem. By distinguishing flare from random noise or flicker, the work opens a new and practically relevant research direction for robust event-based vision.
+
+Principled Physics-Based Foundation Instead of treating de-flaring as a pure black-box task, the authors derive a solid technical foundation from first principles. The physics-grounded forward model provides a clear explanation for the non-linear event suppression caused by flare, justifying the need for a specialized solution.
+
+Comprehensive and High-Quality Benchmark The introduction of the E-Deflare Benchmark is a substantial contribution to the community. By providing a large-scale simulated dataset alongside the first-ever paired real-world test set, the authors establish a rigorous evaluation protocol that was previously missing.
+
+Extensive Validation and Downstream Impact The work is validated through thorough experiments on both simulated and real data, supported by meaningful ablation studies. Furthermore, demonstrating performance gains in downstream tasks such as image and 3D reconstruction highlights the practical value of the framework for the broader vision community.
+
+Major Weaknesses:
+Limited Algorithmic and Architectural Novelty: The core restoration network, E-DeflareNet, relies on a standard residual 3D U-Net architecture. While this choice effectively demonstrates the strength of the proposed data pipeline, the paper lacks significant innovation in neural operators or specialized architectures tailored to the unique spatio-temporal characteristics of lens flare in event-based vision.
+
+Small-Scale and Controlled Real-World Evaluation: The introduced paired real-world test set, while a valuable first for the field, is relatively small and was collected under strictly controlled laboratory conditions. This limits evidence on the model's robustness and generalization in unconstrained real-world environments, diverse lens coatings, or varying sensor hardware.
+
+Computational Overhead for High-Speed Applications: Operating on event voxel grids using 3D convolutions involves significant computational and memory costs. Given that event cameras are primarily favored for high-speed, low-latency applications like robotics and drones, the absence of a detailed inference latency analysis or a discussion on real-time feasibility is a notable omission.
+
+Metric Alignment with Perceptual Quality: The evaluation relies on standard metrics adapted from related tasks (such as image reconstruction). A deeper discussion on how these metrics align with actual perceptual quality and the specific functional requirements of downstream event-based vision tasks would further strengthen the conclusions.
+
+Minor Weaknesses:
+Baseline Selection and Comparative Rigor: The benchmarks focus on general event-based denoising and flicker-removal methods. Since these were not specifically designed to handle structured flare artifacts, the performance gains may appear more pronounced than they would be if compared against more specialized or adapted traditional de-flaring baselines.
+
+Incomplete Robustness Analysis: The paper would benefit from a more granular evaluation of system performance across various edge cases, such as extreme flare intensities, high-velocity scene motion, diverse light source types, and varied sensor-specific noise profiles.
+
+Preliminary Recommendation: 4: Borderline Accept
+Justification Of Preliminary Recommendation:
+The paper tackles a relevant and overlooked practical problem in event cameras and presents a complete system-level solution, including physical modeling, synthetic data generation, real paired data acquisition, and downstream evaluation. This makes the contribution meaningful beyond the restoration model itself. The main strengths are the clear motivation, solid engineering design, useful benchmark contribution, and evidence that the method improves both restoration and downstream tasks. The main weaknesses are that the real paired evaluation is still limited and controlled, and the proposed physics-guided composition remains approximate.
+
+Suggestions For Rebuttal:
+Please clarify the practical limits of the E-Flare-R acquisition setup and discuss how the model is expected to generalize to unconstrained real-world environments featuring diverse lens coatings, complex internal reflections, or varying sensor hardware not represented in the controlled training conditions. Furthermore, it is essential to address the sensitivity of the PNL-ES composition to inaccuracies in the estimated intensity proxies and whether the restoration quality remains robust against noise in these estimates.
+
+To strengthen the empirical results, please provide a granular performance analysis across varying flare intensities and scene complexities, specifically addressing scenarios where extreme flare may nearly saturate or suppress background signals.
+
+Please justify the current baseline selection and clarify whether more specialized or adapted de-flaring methods were considered to ensure a rigorous comparative evaluation against the proposed framework.
+
+Ethics Review Flag: No
+Confidence Level: 4: High Confidence - The reviewer has strong expertise in the area. They are highly familiar with the relevant literature and can critically evaluate the paper.
+Review of 2975
+Official Reviewby Reviewer J4Ye18 Apr 2026, 22:23 (modified: 17 May 2026, 14:16)Program Chairs, Senior Area Chairs, Area Chairs, Reviewers, AuthorsRevisions
+Choose The Contribution Type You Are Using For Your Review: Datasets/Benchmarks
+Justify The Above Choice:
+The core contribution of this paper is the proposal of a new dataset. Therefore, I think the appropriate Contribution Type for this paper should be Datasets/Benchmarks.
+
+Paper Summary:
+This paper addresses the overlooked problem of lens flare in event cameras and proposes the first systematic de-flare framework, E-Deflare. The authors first derive a physics-based forward model of flare formation in event streams, revealing the non-linear suppression mechanism between background events and flare events in the log-rate domain. Based on this theory, they design a two-stage physics-driven simulator for generating training data. In addition, the authors construct the first paired real-world test set E-Flare-R using a custom experimental setup with high-frequency flickering light sources for synchronization. Together with the large-scale simulated dataset E-Flare2.7K and the real-world sequences DSEC-Flare, they form a complete evaluation benchmark.
+
+Paper Strengths:
+The paper does not simply treat flare as additive noise. Instead, starting from the logarithmic imaging principle of event cameras, it derives the weighted mixing formula for background and flare in the log-rate domain. This theoretical characterization of the non-linear suppression mechanism provides a solid scientific foundation for the subsequent simulator design.
+Constructing paired real event-flare data is extremely challenging; the paper contributes the first high-fidelity real test set to the community, even though the captured scenes are relatively simple.
+Major Weaknesses:
+Is the captured real dataset collected from static or dynamic scenes? If it is static, it has little practical significance. If it is dynamic, how is alignment guaranteed between the recordings before and after filter removal?
+E-DeflareNet adopts a standard 3D U-Net with no novel architecture or event-specific understanding; therefore, E-DeflareNet itself does not constitute a core contribution of this paper.
+Since the authors are able to capture a real paired test set, why not construct a real training set?
+Were PFD-A and PFD-B trained on E-Flare2.7K? If not, the comparison is meaningless.
+From the results in Fig. 7, the 3D reconstruction shows no substantial improvement.
+There is a lack of discussion on model complexity.
+Minor Weaknesses:
+Please refer to the Major Weaknesses.
+
+Preliminary Recommendation: 3: Borderline Reject
+Justification Of Preliminary Recommendation:
+The paper performs physical modeling and constructs datasets for the practical problem of event-camera de-flare. Although the physical derivation offers some inspiration, the work suffers from notable deficiencies in the real-world relevance of the dataset, the fairness of the experimental design, and the clarity of its core contributions.
+
+Suggestions For Rebuttal:
+Please refer to the Major Weaknesses.
+
+Ethics Review Flag: No
+Confidence Level: 4: High Confidence - The reviewer has strong expertise in the area. They are highly familiar with the relevant literature and can critically evaluate the paper.
+
+
 \documentclass[10pt,twocolumn,letterpaper]{article}
 \usepackage[rebuttal]{cvpr} 
 

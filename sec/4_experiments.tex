@@ -2,6 +2,38 @@
 \label{sec:experiments}
 This section presents quantitative \& qualitative experiments on event de-flaring.
 
+\begin{table*}[!tbp]
+    \centering
+    \caption{\textbf{Quantitative comparisons on the E-Flare2.7K test set}. We evaluate against five event-based de-flaring baselines using event-level and voxel-level metrics, respectively. Cell backgrounds highlight the \colorbox{gray!20}{raw baseline}, \colorbox{ev_red!20}{second-best}, and \colorbox{ev_blue!20}{best} value per metric. The final row shows the percentage improvement of our method over the second-best ($\downarrow$: lower is better, $\uparrow$: higher is better). Ch. = Chamfer Distance; Gau. = Gaussian Distance; PM2/PM4 = Pooled MSE at scales 2/4.}
+    \vspace{-0.3cm}
+    \label{tab:main_sim_quant}
+    \small
+    \resizebox{\textwidth}{!}{
+    \begin{tabular}{lcccccccc}
+    \toprule
+    \textbf{Method} & ~~~Ch.$\downarrow$~~~ & ~~~Gau.$\downarrow$~~~ & ~~MSE$\downarrow$~~ & ~~PM2$\downarrow$~~ & ~~PM4$\downarrow$~~ & ~~R-F1$\uparrow$~~ & ~~T-F1$\uparrow$~~ & ~~TP-F1$\uparrow$~~
+    \\
+    \midrule
+    \textcolor{gray}{$\bullet$}~\textcolor{gray}{Raw Input} & \cellcolor{gray!20}\textcolor{gray}{$1.3555$} & \cellcolor{gray!20}\textcolor{gray}{$0.5222$} & \cellcolor{gray!20}\textcolor{gray}{$0.8315$} & \cellcolor{gray!20}\textcolor{gray}{$0.3666$} & \cellcolor{gray!20}\textcolor{gray}{$0.3430$} & \cellcolor{gray!20}\textcolor{gray}{$0.5138$} & \cellcolor{gray!20}\textcolor{gray}{$0.6303$} & \cellcolor{gray!20}\textcolor{gray}{$0.6939$}
+    \\
+    \textcolor{ev_red}{$\bullet$}~EFR \cite{wang2022linear} & $1.3237$ & $0.5439$ & $0.5357$ & $0.2019$ & $0.1755$ & $0.1616$ & $0.3572$ & $0.4811$
+    \\
+    \textcolor{ev_red}{$\bullet$}~PFD-A \cite{shi2024polarity} & $1.3958$ & $0.5397$ & $0.8357$ & $0.3637$ & $0.3392$ & $0.4383$ & \cellcolor{ev_red!20}$0.5496$ & $0.6125$
+    \\
+    \textcolor{ev_red}{$\bullet$}~PFD-B \cite{shi2024polarity} & \cellcolor{ev_red!20}$1.2496$ & \cellcolor{ev_red!20}$0.4613$ & \cellcolor{ev_red!20}$0.2851$ & $0.1159$ & $0.1021$ & \cellcolor{ev_red!20}$0.4460$ & $0.5155$ & $0.5727$
+    \\
+    \textcolor{ev_red}{$\bullet$}~Voxel Transform & $1.2923$ & $0.5576$ & $0.3495$ & \cellcolor{ev_red!20}$0.1037$ & \cellcolor{ev_red!20}$0.0829$ & $0.2177$ & $0.5444$ & \cellcolor{ev_red!20}$0.6318$
+    \\
+    \midrule
+    \textcolor{ev_blue}{$\bullet$}~\ours & \cellcolor{ev_blue!20}$\mathbf{0.4477}$ & \cellcolor{ev_blue!20}$\mathbf{0.2646}$ & \cellcolor{ev_blue!20}$\mathbf{0.1269}$ & \cellcolor{ev_blue!20}$\mathbf{0.0487}$ & \cellcolor{ev_blue!20}$\mathbf{0.0435}$ & \cellcolor{ev_blue!20}$\mathbf{0.7071}$ & \cellcolor{ev_blue!20}$\mathbf{0.7627}$ & \cellcolor{ev_blue!20}$\mathbf{0.7794}$
+    \\
+    \emph{Improvement (\%)} $\uparrow$ & $64.2\%$$\uparrow$ & $42.6\%$$\uparrow$ & $55.5\%$$\uparrow$ & $53.0\%$$\uparrow$ & $47.5\%$$\uparrow$ & $58.5\%$$\uparrow$ & $38.8\%$$\uparrow$ & $23.4\%$$\uparrow$
+    \\
+    \bottomrule
+    \end{tabular}}
+    \vspace{-0.3cm}
+\end{table*}
+
 \subsection{Experimental Settings}
 
 Our proposed model is trained exclusively on \emph{E-Flare2.7K-train}, and tested on \emph{E-Flare2.7K-test}, \emph{E-Flare-R}, and \emph{DSEC-Flare} datasets, respectively.
@@ -31,39 +63,7 @@ Our model is trained on \textbf{E-Flare2.7K} for $40$k iterations on a single NV
 \noindent\textbf{Evaluation on Simulated Data.}
 Table~\ref{tab:main_sim_quant} shows that existing methods are ill-suited for event-based de-flaring. Their rule-based filtering fails to distinguish structured flare patterns from legitimate events, often removing valid signals. In contrast, our learning-based model effectively captures the flare's non-local, spatio-temporal characteristics, enabling it to selectively remove artifacts while preserving scene dynamics. This yields, for instance, a $\mathbf{64.2\%}$ improvement in Chamfer distance and a $\mathbf{55.5\%}$ improvement in MSE over the next-best method.
 
-\begin{table*}[!t]
-    \centering
-    \caption{\textbf{Quantitative comparisons on the E-Flare2.7K test set}. We evaluate against five event-based de-flaring baselines using event-level and voxel-level metrics, respectively. Cell backgrounds highlight the \colorbox{gray!20}{raw baseline}, \colorbox{ev_red!20}{second-best}, and \colorbox{ev_blue!20}{best} value per metric. The final row shows the percentage improvement of our method over the second-best ($\downarrow$: lower is better, $\uparrow$: higher is better). Ch. = Chamfer Distance; Gau. = Gaussian Distance; PM2/PM4 = Pooled MSE at scales 2/4.}
-    \vspace{-0.3cm}
-    \label{tab:main_sim_quant}
-    \small
-    \resizebox{\textwidth}{!}{
-    \begin{tabular}{lcccccccc}
-    \toprule
-    \textbf{Method} & ~~~Ch.$\downarrow$~~~ & ~~~Gau.$\downarrow$~~~ & ~~MSE$\downarrow$~~ & ~~PM2$\downarrow$~~ & ~~PM4$\downarrow$~~ & ~~R-F1$\uparrow$~~ & ~~T-F1$\uparrow$~~ & ~~TP-F1$\uparrow$~~
-    \\
-    \midrule
-    \textcolor{gray}{$\bullet$}~\textcolor{gray}{Raw Input} & \cellcolor{gray!20}\textcolor{gray}{$1.3555$} & \cellcolor{gray!20}\textcolor{gray}{$0.5222$} & \cellcolor{gray!20}\textcolor{gray}{$0.8315$} & \cellcolor{gray!20}\textcolor{gray}{$0.3666$} & \cellcolor{gray!20}\textcolor{gray}{$0.3430$} & \cellcolor{gray!20}\textcolor{gray}{$0.5138$} & \cellcolor{gray!20}\textcolor{gray}{$0.6303$} & \cellcolor{gray!20}\textcolor{gray}{$0.6939$}
-    \\
-    \textcolor{ev_red}{$\bullet$}~EFR \cite{wang2022linear} & $1.3237$ & $0.5439$ & $0.5357$ & $0.2019$ & $0.1755$ & $0.1616$ & $0.3572$ & $0.4811$
-    \\
-    \textcolor{ev_red}{$\bullet$}~PFD-A \cite{shi2024polarity} & $1.3958$ & $0.5397$ & $0.8357$ & $0.3637$ & $0.3392$ & $0.4383$ & \cellcolor{ev_red!20}$0.5496$ & $0.6125$ 
-    \\
-    \textcolor{ev_red}{$\bullet$}~PFD-B \cite{shi2024polarity} & \cellcolor{ev_red!20}$1.2496$ & \cellcolor{ev_red!20}$0.4613$ & \cellcolor{ev_red!20}$0.2851$ & $0.1159$ & $0.1021$ & \cellcolor{ev_red!20}$0.4460$ & $0.5155$ & $0.5727$ 
-    \\
-    \textcolor{ev_red}{$\bullet$}~Voxel Transform & $1.2923$ & $0.5576$ & $0.3495$ & \cellcolor{ev_red!20}$0.1037$ & \cellcolor{ev_red!20}$0.0829$ & $0.2177$ & $0.5444$ & \cellcolor{ev_red!20}$0.6318$ 
-    \\
-    \midrule
-    \textcolor{ev_blue}{$\bullet$}~\ours & \cellcolor{ev_blue!20}$\mathbf{0.4477}$ & \cellcolor{ev_blue!20}$\mathbf{0.2646}$ & \cellcolor{ev_blue!20}$\mathbf{0.1269}$ & \cellcolor{ev_blue!20}$\mathbf{0.0487}$ & \cellcolor{ev_blue!20}$\mathbf{0.0435}$ & \cellcolor{ev_blue!20}$\mathbf{0.7071}$ & \cellcolor{ev_blue!20}$\mathbf{0.7627}$ & \cellcolor{ev_blue!20}$\mathbf{0.7794}$ 
-    \\
-    \emph{Improvement (\%)} $\uparrow$ & $64.2\%$$\uparrow$ & $42.6\%$$\uparrow$ & $55.5\%$$\uparrow$ & $53.0\%$$\uparrow$ & $47.5\%$$\uparrow$ & $58.5\%$$\uparrow$ & $38.8\%$$\uparrow$ & $23.4\%$$\uparrow$
-    \\
-    \bottomrule
-    \end{tabular}}
-    \vspace{-0.3cm}
-\end{table*}
-
-\begin{figure*}[!t]
+\begin{figure*}[!tbp]
     \centering
     \includegraphics[width=\textwidth]{figures/simu_R.pdf}
     \vspace{-0.6cm}
@@ -78,7 +78,7 @@ Table~\ref{tab:main_sim_quant} shows that existing methods are ill-suited for ev
 \noindent\textbf{Evaluation on Paired Real-World Data.}
 Our model, trained \emph{solely} on simulated data, generalizes zero-shot to real-world data. Table~\ref{tab:main_real_quant} shows consistent performance trends. \textbf{E-DeflareNet} significantly outperforms all baselines on most key metrics, such as $\mathbf{35.6\%}$ in Chamfer distance. While TP-F1 shows a slight decrease (-$8.3\%$), this reflects a conservative strategy that prioritizes high fidelity by avoiding false positives over aggressively recovering every noisy event. This trade-off yields superior results on stricter metrics like Chamfer and R-F1. Overall, these results validate model robustness and pipeline effectiveness.
 
-\begin{table*}[!t]
+\begin{table*}[!tbp]
     \centering
     \caption{\textbf{Quantitative comparisons on the E-Flare-R dataset}. We evaluate against five event-based de-flaring baselines using event-level and voxel-level metrics, respectively. Cell backgrounds highlight the \colorbox{gray!20}{raw baseline}, \colorbox{ev_red!20}{second-best}, and \colorbox{ev_blue!20}{best} value per metric. The final row shows the percentage improvement of our method over the second-best ($\downarrow$: lower is better, $\uparrow$: higher is better). Ch. = Chamfer Distance; Gau. = Gaussian Distance; PM2/PM4 = Pooled MSE at scales 2/4.}
     \vspace{-0.3cm}
@@ -110,7 +110,7 @@ Our model, trained \emph{solely} on simulated data, generalizes zero-shot to rea
     \vspace{-0.3cm}
 \end{table*}
 
-\begin{figure*}[!t]
+\begin{figure*}[!tbp]
     \centering
     \includegraphics[width=\textwidth]{figures/real_R.pdf}
     \vspace{-0.6cm}
@@ -142,7 +142,7 @@ Second, the substantial gap between \emph{Simple} and our \emph{Full Model} (Cha
 Collectively, these ablations confirm that the success of \textbf{E-Deflare} arises from principled physical modeling: (1) maintaining correct light source semantics in training targets, and (2) implementing the non-linear event suppression mechanism derived from the irradiance-domain interaction model.
 
 
-\begin{table*}[!t]
+\begin{table*}[!tbp]
     \centering
     \caption{\textbf{Ablation study on the E-Flare-R dataset}. We evaluate three variants to analyze our core design choices. The final row shows the improvement of our full model over the best ablated variant ($\downarrow$: lower is better, $\uparrow$: higher is better). Ch. = Chamfer Distance; Gau. = Gaussian Distance; PM2/PM4 = Pooled MSE at scales 2/4.}
     \vspace{-0.3cm}
@@ -182,7 +182,7 @@ To validate the generalizability of our framework, we evaluate \textbf{E-Deflare
 \noindent\textbf{Event-based Imaging.}
 We first assess the impact of de-flaring on event-to-image reconstruction using the state-of-the-art SPADE-E2VID framework~\cite{cadena2021spade}. Fig.~\ref{fig:image_reconstruction} shows results on challenging sequences in \textbf{DSEC-Flare}. Images reconstructed from raw, flare-corrupted events exhibit strong flare patterns, obscuring fine scene details. In contrast, images reconstructed from our de-flared events recover cleaner and accurate illumination, revealing significant visual improvement. These results demonstrate that \textbf{E-Deflare} serves as an effective pre-processing step, substantially enhancing the clarity and usability of event data for imaging applications.
 
-\begin{figure}[!t]
+\begin{figure}[!htbp]
     \centering
     \includegraphics[width=\columnwidth]{figures/image_reconstruction.pdf}
     \vspace{-0.65cm}
@@ -204,7 +204,7 @@ We first assess the impact of de-flaring on event-to-image reconstruction using 
 \noindent\textbf{Event-based 3D Reconstruction.}
 To demonstrate the practical impact of our method, we conduct a rigorous quantitative evaluation on event-based 3D reconstruction. As no standard benchmark with flare artifacts exists for this task, we synthesized a paired event dataset from the popular LEGO scene of NeRF-synthetic~\cite{mildenhall2021nerf}, following the simulation methodology of PECS~\cite{han2024physical}. The experimental process involves reconstructing a 3D scene from various event streams (the original flare-corrupted input, our de-flared output, and outputs from baseline methods) using Event3DGS~\cite{han2024event}. We then evaluate the reconstruction by rendering novel views and comparing them against the pristine ground truth, with background color normalization for a fair comparison.
 
-\begin{table}[!t]
+\begin{table}[!htbp]
     \centering
     \caption{\textbf{Downstream task comparisons} for event-based 3D reconstruction. We use Event3DGS~\cite{han2024event} to reconstruct scenes and evaluate the quality of novel view synthesis. $\uparrow$: higher is better.}
     \label{tab:3dgs_quant}
@@ -226,7 +226,7 @@ To demonstrate the practical impact of our method, we conduct a rigorous quantit
 
 
 
-\begin{figure}[!t]
+\begin{figure}[!htbp]
     \centering
     \includegraphics[width=\columnwidth]{figures/3D_reconstruction.pdf}
     \vspace{-0.65cm}
@@ -235,5 +235,3 @@ To demonstrate the practical impact of our method, we conduct a rigorous quantit
     \vspace{-0.1cm}
 \end{figure}
 The results in Table~\ref{tab:3dgs_quant} reveal that naive de-flaring can be detrimental. Most baselines fail to improve reconstruction, with some even degrading performance below the original input. In contrast, our method is the only one providing a clear and consistent improvement, boosting the SSIM from $0.765$ to a state-of-the-art $\mathbf{0.792}$. This powerfully demonstrates that our approach provides a cleaner, more reliable input that directly and substantially benefits downstream 3D perception tasks.
-
-\FloatBarrier
