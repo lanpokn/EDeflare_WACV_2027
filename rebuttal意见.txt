@@ -1,0 +1,92 @@
+\documentclass[10pt,twocolumn,letterpaper]{article}
+\usepackage[rebuttal]{cvpr} 
+
+% Include other packages here, before hyperref.
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{booktabs}
+
+% Color definitions
+\usepackage[dvipsnames]{xcolor}
+\usepackage{colortbl}
+
+% Custom highlight colors for reviewers
+\definecolor{ev_green}{RGB}{0, 180, 139}
+\definecolor{ev_red}{RGB}{239, 99, 75}
+\definecolor{ev_blue}{RGB}{99, 113, 250}
+
+% Standard ECCV link color
+\definecolor{eccvblue}{rgb}{0.12,0.49,0.85}
+\usepackage[pagebackref,breaklinks,colorlinks,allcolors=eccvblue]{hyperref}
+
+% Rebuttal-specific counter setup
+\setcounter{page}{1}
+\renewcommand{\thefigure}{R\arabic{figure}}
+\setcounter{figure}{0}
+\renewcommand{\thetable}{R\arabic{table}}
+\setcounter{table}{0}
+\renewcommand{\theequation}{R\arabic{equation}}
+\setcounter{equation}{0}
+
+%%%%%%%%% PAPER ID
+\def\paperID{2975} 
+\def\confName{ECCV}
+\def\confYear{2026}
+
+\begin{document}
+
+%%%%%%%%% TITLE
+\title{\vspace{-0.4cm}Learning to Remove Lens Flare in Event Camera\vspace{-0.4cm}}
+
+\maketitle
+\thispagestyle{empty}
+\appendix
+
+%%%%%%%%% BODY TEXT 
+
+\noindent We sincerely thank the reviewers for their valuable and insightful feedback. We are deeply encouraged that they recognize our problem as \emph{``underexplored and practically relevant''} (\textbf{uciQ, B3Wd}), our theoretical formulation as \emph{``solid/principled''} (\textbf{B3Wd, J4Ye}), and our dataset as a \emph{``comprehensive/high-quality benchmark''} (\textbf{uciQ, B3Wd, J4Ye}). We address the main concerns below.
+
+\vspace{0.1cm}
+\noindent\colorbox{ev_red!12}{\textbf{- Authors' Response to Reviewer [\textcolor{ev_red}{\textbf{\texttt{uciQ}}}]:~~~~~~~~~~~~~~~~~~~~~~~}}
+
+
+\noindent\emph{\textcolor{ev_red}{\textbf{Q1. Physical model for spatially variant flare.}}}. \textbf{A}: We would like to clarify that our core physical contribution is the \textbf{event composition mechanism (PNL-ES)} via modeling sensor-level log-rate suppression, rather than flare events generation. Our modular framework allows for the seamless integration of advanced optical ray-tracing, while PNL-ES handles the crucial event-level interaction.
+
+\noindent\emph{\textcolor{ev_red}{\textbf{Q2. Baseline mismatch.}}}. \textbf{A}: While existing baselines were not specifically designed for flares, no specialized methods exist as this is the \textbf{first} work on event de-flaring. The failure of traditional filters on our benchmark exactly justifies the necessity of our learning-based framework.
+
+\noindent\emph{\textcolor{ev_red}{\textbf{Q3. Suppressing vs. recovering.}}}. \textbf{A}: Log-rate suppression is a fundamental physical reality (Eq. 9). The inherent difficulty of recovery stems from the physical signal loss itself rather than our model, which is evidenced by the failure of all existing methods. Our approach successfully preserves surviving signals instead of blindly deleting events. Gains in downstream tasks (Table 5, Figs. 6 \& 7) prove that we effectively recover meaningful scene structures.
+
+\noindent\emph{\textcolor{ev_red}{\textbf{Q4. Rich background content.}}}. \textbf{A}: DSEC-Flare sequences inherently contain rich urban backgrounds. Although high flare density may visually obscure them, these backgrounds are effectively recovered by our model. Further  results on such complex scenes are provided in \textbf{Appendix E}.
+
+\noindent\emph{\textcolor{ev_red}{\textbf{Q5. DSEC-Flare improvements.}}}. \textbf{A}: Quantitative comparisons are infeasible for DSEC-Flare due to the lack of ground truth. However, clear qualitative gains and significant improvements in downstream 3D/image reconstruction (Table 5, Figs.~6 \& 7) demonstrate the tangible practical benefits of PNL-ES. Further results on DSEC-Flare are provided in \textbf{Appendix E}.
+
+\noindent\emph{\textcolor{ev_red}{\textbf{Q6. Claim of being the ``first''.}}}. \textbf{A}: We respectfully stand by our claim. To our knowledge, this is the first work to systematically model and remove lens flare from event streams using a physically-grounded forward model.
+
+\noindent\emph{\textcolor{ev_red}{\textbf{Q7. Figure 2 arrow directions.}}}. \textbf{A}: The arrows represent event polarity (e.g., up/positive, down/negative). We will explicitly clarify this in the revised caption.
+
+\vspace{0.1cm}
+\noindent\colorbox{ev_blue!12}{\textbf{- Authors' Response to Reviewer [\textcolor{ev_blue}{\textbf{\texttt{B3Wd}}}]:~~~~~~~~~~~~~~~~~~~~~~~}}
+
+\noindent\emph{\textcolor{ev_blue}{\textbf{Q1: Limited algorithmic novelty (Standard 3D U-Net).}}}. \textbf{A}: Please refer to our response to \textbf{J4Ye-Q5}. 
+
+\noindent\emph{\textcolor{ev_blue}{\textbf{Q2: Generalization to unconstrained environments / diverse lenses.}}}. \textbf{A}: While E-Flare-R is captured in controlled conditions, our model's zero-shot generalization capabilities on the unconstrained DSEC-Flare dataset (Table 5, Fig.~6) firmly validate its robustness. DSEC uses entirely different sensors and lenses than our training set, yet our model effectively removes complex real-world flares, proving the solid sim-to-real effectiveness of PNL-ES.
+
+\noindent\emph{\textcolor{ev_blue}{\textbf{Q3: Computational overhead and real-time feasibility.}}}. \textbf{A}: Our primary objective is to formally define and solve the event de-flaring problem for the first time. Real-time inference is technically feasible and will be addressed in future work by migrating to lightweight, on-board architectures like Spiking Neural Networks (SNNs); the current computational cost is not an inherent flaw of our work.
+
+\noindent\emph{\textcolor{ev_blue}{\textbf{Q4: Baseline selection \& Metric alignment.}}}. \textbf{A}: \textbf{Metrics:} Image reconstruction is a highly critical downstream application for event cameras (e.g., smartphones, pro-photography), making these metrics a direct and faithful reflection of perceptual quality. \textbf{Baselines:} We process \emph{raw event streams}. Currently, \textbf{zero} specialized event-based de-flaring methods exist. Traditional image-based de-flaring methods are completely inapplicable due to the massive modality gap. Thus, selecting ``more specialized'' baselines was impossible; we compared against the best available event artifact filters.
+
+\vspace{0.1cm}
+\noindent\colorbox{ev_green!12}{\textbf{- Authors' Response to Reviewer [\textcolor{ev_green}{\textbf{\texttt{J4Ye}}}]:~~~~~~~~~~~~~~~~~~~~~~~}}
+
+\noindent\emph{\textcolor{ev_green}{\textbf{Q1: Were PFD-A/B trained on E-Flare2.7K?}}}. \textbf{A}: No, \textbf{they cannot be trained}. PFD and EFR are \textbf{traditional, rule-based C++ filters}, not neural networks. Their failure on structured flares exactly highlights the necessity of introducing our learning-based, data-driven framework.
+
+\noindent\emph{\textcolor{ev_green}{\textbf{Q2: Is the real dataset static or dynamic? How is alignment guaranteed?}}}. \textbf{A}: The datasets are \textbf{dynamic}. We capture high-frequency flickering light sources with a fixed camera (L284). This flickering acts as a dynamic target, enabling exact temporal cross-correlation (L289) to guarantee rigorous sub-millisecond alignment between passes.
+
+\noindent\emph{\textcolor{ev_green}{\textbf{Q3: Why not construct a real training set?}}}. \textbf{A}: While possible, manually collected real data severely lacks diversity in scenes, motions, and flare patterns, risking overfitting. Thus, our large-scale simulation is better suited for robust training, leaving the scarce real data for rigorous testing.
+
+\noindent\emph{\textcolor{ev_green}{\textbf{Q4: 3D reconstruction shows no substantial improvement.}}}. \textbf{A}: Global metric gains (e.g., SSIM) appear modest only because flare artifacts occupy a localized portion of the overall 3D scene, diluting the metrics. However, Fig.~7 clearly shows that localized floating artifacts and ghosting are successfully eliminated.
+
+\noindent\emph{\textcolor{ev_green}{\textbf{Q5: Lack of network novelty and complexity discussion.}}}. \textbf{A}: Using a standard 3D U-Net is an \textbf{intentional design choice} (L311). Its ``ordinary'' nature precisely proves our core claim: our physically grounded data alone suffices to achieve SOTA (L91). Citing it as a weakness overlooks our primary data pipeline contribution. Complexity details will be expanded in the appendix.
+
+\end{document}

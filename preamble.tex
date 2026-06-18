@@ -1,11 +1,43 @@
-%
-% --- inline annotations
-%
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{colortbl}
+\usepackage{multirow}
+\usepackage{wrapfig}
+\usepackage{float}
+\usepackage{titletoc}
+\usepackage{soul}
+
+\definecolor{ev_1}{RGB}{247,0,9}
+\definecolor{ev_2}{RGB}{214,9,42}
+\definecolor{ev_3}{RGB}{196,13,61}
+\definecolor{ev_4}{RGB}{156,19,102}
+\definecolor{ev_5}{RGB}{102,31,157}
+\definecolor{ev_6}{RGB}{101,31,158}
+\definecolor{ev_7}{RGB}{66,37,194}
+\definecolor{ev_8}{RGB}{49,41,211}
+\definecolor{ev_9}{RGB}{28,41,206}
+
+\newcommand{\ours}{\textbf{\textcolor{ev_1}{E}\textcolor{ev_2}{-}\textcolor{ev_3}{D}\textcolor{ev_4}{e}\textcolor{ev_5}{f}\textcolor{ev_6}{l}\textcolor{ev_7}{a}\textcolor{ev_8}{r}\textcolor{ev_9}{e}}}
+
+\definecolor{red}{rgb}{0.8,0,0}
+\definecolor{green}{RGB}{0, 133, 21}
+\definecolor{grey}{rgb}{0.5,0.5,0.5}
+
+\definecolor{ev_green}{RGB}{0, 180, 139}
+\definecolor{ev_red}{RGB}{239, 99, 75}
+\definecolor{ev_blue}{RGB}{99, 113, 250}
+
+\newcommand{\mb}[1]{\mathbf{#1}}
+\def\tabref#1{Table~\ref{#1}}
+\def\figref#1{Figure~\ref{#1}}
+\def\secref#1{Section~\ref{#1}}
+\def\algref#1{Algorithm~\ref{#1}}
+\def\appref#1{Appendix~\ref{#1}}
+
+\newcommand{\Ra}{\textcolor{red}{jp3v}\xspace}
+\newcommand{\Rb}{\textcolor{green}{yp7r}\xspace}
+\newcommand{\Rc}{\textcolor{blue}{P4hs}\xspace}
+
 \newcommand{\red}[1]{{\color{red}#1}}
 \newcommand{\todo}[1]{{\color{red}#1}}
 \newcommand{\TODO}[1]{\textbf{\color{red}[TODO: #1]}}
-% --- disable by uncommenting  
-% \renewcommand{\TODO}[1]{}
-% \renewcommand{\todo}[1]{#1}
-
-

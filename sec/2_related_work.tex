@@ -1,0 +1,23 @@
+\section{Related Work}
+\label{sec:related_work}
+
+\noindent\textbf{Lens Flare Removal.}
+Lens flare is a long-standing problem in image restoration, caused by reflections and scattering within camera lenses \cite{fowles1989introduction,hullin2011physically,wu2021train}. Early heuristic methods \cite{asha2019auto,vitoria2019automatic} have been surpassed by learning-based approaches \cite{dai2023nighttime,dai2022flare7k,wu2021train,dai2024flare7k++,zhou2023improving,jiang2024mfdnet}, which achieve superior performance but face the same challenge: \textit{the lack of paired real-world data} \cite{dai2022flare7k,wu2021train}. This constraint has led to two main directions: unpaired learning with generative models \cite{qiao2021light}, often sacrificing detail, and synthetic training using simulated flare layers \cite{wu2021train,dai2022flare7k,dai2024flare7k++,zhou2023improving}. These simulation-based pipelines are practical when paired data are scarce, yet they share a common assumption: that training pairs can be synthesized by linearly superimposing flare onto clean images. This additive assumption does not hold for event cameras, which inherently encode intensity in a non-linear and discrete manner; to our knowledge, we are the first to characterize this non-linear effect and account for it in a simulation pipeline. Yet, all existing methods target static images; they neither address the asynchronous, high-temporal-resolution nature of event data nor the dynamic behavior of flare in this setting.
+
+
+\noindent\textbf{Event Artifact Removal.}
+Event stream restoration has targeted a variety of artifacts. Previous works remove sensor noise such as background activity using hand-crafted filters \cite{shi2024polarity,wu2020probabilistic,guo2022low,feng2020event,wang2019ev,wang2020joint} or learning-based techniques \cite{duan2021eventzoom,rios2023within,baldwin2020event,duan2021guided,zhang2023neuromorphic}. These methods handle random or uncorrelated noise, fundamentally different from the structured patterns caused by lens flare. Others focus on interference from light sources, \eg, flicker removal \cite{wang2022linear,im2023live}, but flare can arise even under stable illumination, making such filters inadequate. A few works mention ``stray light'' artifacts \cite{shi2023identifying,shi2024polarity}, closely related to flare, yet treat them as generic light interference without a physical model. Without a physical model, such filters risk suppressing valid events. In contrast, we explicitly model flare as a distinct optical phenomenon and address it with a physics-guided approach.
+
+
+\noindent\textbf{Event Camera Simulation.}
+The scarcity of ground-truth event data has motivated the development of event simulators \cite{bhattacharya2025monocular,messikommer2025data,pellerito2024deep,muglikar2023event}, generally classified into video-driven and learning-based approaches. However, neither can produce paired flare data. The video-driven simulators \cite{rebecq2018esim,hu2021v2e,gehrig2020video,joubert2021event,lin2022dvs,han2024physical} rely on input videos, but paired video flare datasets do not exist, and these methods already suffer from notable sim-to-real gaps \cite{stoffregen2020reducing}, which would worsen when converting synthetic flare videos to synthetic events. Learning-based simulators \cite{zhang2023v2ce,gehrig2020video,pantho2022event,baek2020real,rizzo2022event,zhu2021eventgan,gu2021learn} depend on large and diverse training data that are currently unavailable for flare modeling. Consequently, to the best of our knowledge, \emph{no existing simulator explicitly models lens flare in event cameras;} we introduce the \textbf{first} physics-based simulator derived from an explicit analytical flare formation model for events.
+
+
+
+
+
+
+
+
+
+

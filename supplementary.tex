@@ -1,0 +1,69 @@
+% WACV 2027 supplementary material for E-Deflare.
+% Content migrated from the authoritative ECCV supplementary source.
+
+\documentclass[10pt,twocolumn,letterpaper]{article}
+
+\usepackage[review,algorithms]{wacv}
+
+\input{preamble}
+
+\definecolor{wacvblue}{rgb}{0.21,0.49,0.74}
+\usepackage[pagebackref,breaklinks,colorlinks,allcolors=wacvblue]{hyperref}
+
+\def\wacvPaperID{*****}
+\def\confName{WACV}
+\def\confYear{2027}
+
+\title{Learning to Remove Lens Flare in Event Camera}
+\author{}
+
+\makeatletter
+\def\maketitlesupplementary{%
+    \newpage
+    {
+        \centering
+        \Large
+        \textbf{\thetitle}\\[0.5em]
+        Supplementary Material\\[1.0em]
+        \par
+    }
+}
+\makeatother
+
+\begin{document}
+
+\setcounter{page}{1}
+\setcounter{section}{0}
+\renewcommand{\thesection}{\Alph{section}}
+\setcounter{figure}{0}
+\renewcommand{\thefigure}{\Roman{figure}}
+\setcounter{table}{0}
+\renewcommand{\thetable}{\Roman{table}}
+
+\makeatletter
+\@namedef{r@eq:image_superposition_final}{{2}{2}}
+\@namedef{r@eq:event_stream_definition}{{4}{3}}
+\@namedef{r@eq:sensor_model_integral_redef}{{5}{3}}
+\@namedef{r@eq:continuous_link}{{6}{3}}
+\@namedef{r@eq:log_derivative_mixing}{{7}{4}}
+\@namedef{r@eq:full_mixing_derivative}{{9}{4}}
+\@namedef{r@eq:full_forward_model}{{10}{4}}
+\@namedef{r@eq:integrand_phi}{{11}{4}}
+\@namedef{r@ssec:forward_model}{{3.1}{2}}
+\@namedef{r@ssec:simulator}{{3.2}{3}}
+\@namedef{r@ssec:real_data_acquisition}{{3.3}{4}}
+\@namedef{r@sec:downstream}{{4.4}{7}}
+\@namedef{r@fig:methodology-flowchart}{{2}{3}}
+\@namedef{r@fig:2x2}{{3}{5}}
+\@namedef{r@tab:dataset_overview}{{1}{5}}
+\makeatother
+
+\input{sec/X_suppl}
+
+{
+    \small
+    \bibliographystyle{ieeenat_fullname}
+    \bibliography{main}
+}
+
+\end{document}

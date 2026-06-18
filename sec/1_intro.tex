@@ -1,202 +1,64 @@
 \section{Introduction}
 \label{sec:intro}
 
-Please follow the steps outlined below when submitting your manuscript to the IEEE Computer Society Press.
-This style guide now has several important modifications (for example, you are no longer warned against the use of sticky tape to attach your artwork to the paper), so all authors should read this new version.
-
-%-------------------------------------------------------------------------
-\subsection{Language}
-
-All manuscripts must be in English.
-
-\subsection{Dual submission}
-
-Please refer to the author guidelines on the \confName\ \confYear\ web page for a
-discussion of the policy on dual submissions.
-
-\subsection{Paper length}
-Papers, excluding the references section, must be no longer than eight pages in length.
-The references section will not be included in the page count, and there is no limit on the length of the references section.
-For example, a paper of eight pages with two pages of references would have a total length of 10 pages.
-{\bf There will be no extra page charges for \confName\ \confYear.}
-
-Overlength papers will simply not be reviewed.
-This includes papers where the margins and formatting are deemed to have been significantly altered from those laid down by this style guide.
-Note that this \LaTeX\ guide already sets figure captions and references in a smaller font.
-The reason such papers will not be reviewed is that there is no provision for supervised revisions of manuscripts.
-The reviewing process cannot determine the suitability of the paper for presentation in eight pages if it is reviewed in eleven.
-
-%-------------------------------------------------------------------------
-\subsection{The ruler}
-The \LaTeX\ style defines a printed ruler which should be present in the version submitted for review.
-The ruler is provided in order that reviewers may comment on particular lines in the paper without circumlocution.
-If you are preparing a document using a non-\LaTeX\ document preparation system, please arrange for an equivalent ruler to appear on the final output pages.
-The presence or absence of the ruler should not change the appearance of any other content on the page.
-The camera-ready copy should not contain a ruler.
-(\LaTeX\ users may use options of \texttt{wacv.sty} to switch between different versions.)
-
-Reviewers:
-note that the ruler measurements do not align well with lines in the paper --- this turns out to be very difficult to do well when the paper contains many figures and equations, and, when done, looks ugly.
-Just use fractional references (\eg, this line is $087.5$), although in most cases one would expect that the approximate location will be adequate.
+Lens flare \cite{fowles1989introduction,hullin2011physically,wu2021train}, an optical artifact caused by reflections and scattering within a camera lens, is a well-known source of image degradation in conventional photography \cite{wu2021train,zhou2023improving,dai2022flare7k,dai2024flare7k++,jiang2024mfdnet}. It severely compromises downstream vision tasks and is not fully avoidable by hardware such as lens hoods, which \textbf{cannot block light sources within the field of view}, motivating extensive and ongoing research on lens flare removal in the image domain. 
 
 
-\subsection{Paper ID}
-Make sure that the Paper ID from the submission system is visible in the version submitted for review (replacing the ``*****'' you see in this document).
-If you are using the \LaTeX\ template, \textbf{make sure to update paper ID in the appropriate place in the tex file}.
+Event cameras \cite{gallego2020event,li2021recent,posch2014retinomorphic, chaney2023m3ed,perot2020mpx1,kim2021n-imagenet,muglikar2025event}, which asynchronously capture intensity changes at microsecond resolution, are increasingly important for high-speed and high-dynamic-range applications \cite{tulyakov2022time,hagenaars2021self,li2022asynchronous,lin2024e2pnet,vemprala2021representation,wang2023visevent,zheng2023deep,gehrig2024low,han2024event,li2025active,alonso2019ev-segnet,sun2022ess,kong2024openess,kong2025eventfly,kong2025talk2event,lu2025flexevent,sun2024unified,gehrig2024dense,brander2025reading,messikommer2025data,geckeler2025event}. However, their high dynamic range does not extend to seeing through lens flare, whose intensity is superimposed onto the scene irradiance before the sensor, \textbf{rendering the two inseparable} \cite{brandli2014davis,posch2010gen1,son2017gen3,finateu2020gen4}. Flare-like artifacts are present in many widely used event datasets~\cite{gehrig2021dsec,gehrig2021raft,hu2020ddd20,binas2017ddd17,zhu2018multivehicle}, where they degrade data quality and hinder downstream performance~\cite{shi2023identifying,shi2024polarity,hidalgo2020learning,zubic2023from,jing2024hpl-ess,hamaguchi2023hmnet}. These artifacts have typically been attributed to generic lighting interference~\cite{shi2023identifying}, without recognizing them as lens flare. We argue that lens flare in event cameras is \textbf{a critical yet overlooked problem}. As shown in Fig.~\ref{fig:teaser}, it manifests as a highly structured, spatio-temporal distortion precisely explained by the underlying optics.
 
 
-\subsection{Mathematics}
-
-Please number all of your sections and displayed equations as in these examples:
-\begin{equation}
-  E = m\cdot c^2
-  \label{eq:important}
-\end{equation}
-and
-\begin{equation}
-  v = a\cdot t.
-  \label{eq:also-important}
-\end{equation}
-It is important for readers to be able to refer to any particular equation.
-Just because you did not refer to it in the text does not mean some future reader might not need to refer to it.
-It is cumbersome to have to use circumlocutions like ``the equation second from the top of page 3 column 1''.
-(Note that the ruler will not be present in the final copy, so is not an alternative to equation numbers).
-All authors will benefit from reading Mermin's description of how to write mathematics:
-\url{http://www.pamitc.org/documents/mermin.pdf}.
-
-\subsection{Blind review}
-
-Many authors misunderstand the concept of anonymizing for blind review.
-Blind review does not mean that one must remove citations to one's own work---in fact it is often impossible to review a paper unless the previous citations are known and available.
-
-Blind review means that you do not use the words ``my'' or ``our'' when citing previous work.
-That is all.
-(But see below for tech reports.)
-
-Saying ``this builds on the work of Lucy Smith [1]'' does not say that you are Lucy Smith;
-it says that you are building on her work.
-If you are Smith and Jones, do not say ``as we show in [7]'', say ``as Smith and Jones show in [7]'' and at the end of the paper, include reference 7 as you would any other cited work.
-
-An example of a bad paper just asking to be rejected:
-\begin{quote}
-\begin{center}
-    An analysis of the frobnicatable foo filter.
-\end{center}
-
-   In this paper we present a performance analysis of our previous paper [1], and show it to be inferior to all previously known methods.
-   Why the previous paper was accepted without this analysis is beyond me.
-
-   [1] Removed for blind review
-\end{quote}
+This oversight has significant consequences. In event streams, lens flare appears as large-scale, temporally correlated patterns that differ fundamentally from \emph{random noise} or \emph{periodic flickers}. Existing event-based denoising methods \cite{shi2024polarity,shi2023identifying,wang2022linear,guo2022low,duan2021eventzoom}, designed for \emph{uncorrelated} or \emph{uniform noise}, fail to suppress structured artifacts. Moreover, strong flare signals can \textbf{suppress or distort valid background events} \cite{valencia2023optically}. Recovering this corrupted background is akin to event-based see-through \cite{yu2022learning}, yet far more challenging: those methods assume controlled settings in which only the occluder moves, whereas lens flare is an inherently unconstrained corruption present in arbitrary scenes.
 
 
-An example of an acceptable paper:
-\begin{quote}
-\begin{center}
-     An analysis of the frobnicatable foo filter.
-\end{center}
+A learning-based approach appears most promising, yet it is hindered by a fundamental obstacle: \textbf{the absence of paired training and testing data}~\cite{dai2022flare7k,dai2024flare7k++}. Capturing perfectly aligned event pairs with and without flare requires re-recording the same scene under identical conditions, which is infeasible. This challenge is amplified for event cameras, whose motion encoding makes trajectory alignment nearly impossible. Naively applying an event simulator~\cite{hu2021v2e,lin2022dvs,joubert2021event,zhang2023v2ce,han2024physical} to existing image datasets yields a fully synthetic domain for both input and ground truth, creating a severe sim-to-real gap. Simulation-based approaches in the image domain have addressed this scarcity by collecting flare and background assets \emph{separately}, then compositing them into paired training samples via direct linear superposition~\cite{wu2021train,dai2022flare7k,dai2024flare7k++}, a strategy whose practicality is now well established. The analogous route for event cameras is natural, yet its compositing step is categorically different: because event cameras encode irradiance in the logarithmic domain, merging background and flare event streams is \textbf{not a simple union but a non-linear suppression process} that has never been formally analyzed or characterized.
 
-   In this paper we present a performance analysis of the  paper of Smith \etal [1], and show it to be inferior to all previously known methods.
-   Why the previous paper was accepted without this analysis is beyond me.
 
-   [1] Smith, L and Jones, C. ``The frobnicatable foo filter, a fundamental contribution to human knowledge''. Nature 381(12), 1-213.
-\end{quote}
 
-If you are making a submission to another conference at the same time, which covers similar or overlapping material, you may need to refer to that submission in order to explain the differences, just as you would if you had previously published related work.
-In such cases, include the anonymized parallel submission~\cite{Authors14} as supplemental material and cite it as
-\begin{quote}
-[1] Authors. ``The frobnicatable foo filter'', F\&G 2014 Submission ID 324, Supplied as supplemental material {\tt fg324.pdf}.
-\end{quote}
+We introduce \emph{\ours}, a framework that resolves this challenge by grounding the data generation pipeline in physical analysis. We derive a physical forward model revealing the non-linear compositing mechanism at the core of this problem, which directly guides our primary contributions: a physics-driven simulator that generates the large-scale \textbf{E-Flare2.7K} training set, and a novel, physically-principled acquisition system that captures \textbf{E-Flare-R}, the first-ever paired real-world test set. This benchmark enables training a powerful \textbf{E-DeflareNet} to restore clean event streams with high fidelity.
 
-Finally, you may feel you need to tell the reader that more details can be found elsewhere, and refer them to a technical report.
-For conference submissions, the paper must stand on its own, and not {\em require} the reviewer to go to a tech report for further details.
-Thus, you may say in the body of the paper ``further details may be found in~\cite{Authors14b}''.
-Then submit the tech report as supplemental material.
-Again, you may not assume the reviewers will read this material.
 
-Sometimes your paper is about a problem which you tested using a tool that is widely known to be restricted to a single institution.
-For example, let's say it's 1969, you have solved a key problem on the Apollo lander, and you believe that the 1970 audience would like to hear about your
-solution.
-The work is a development of your celebrated 1968 paper entitled ``Zero-g frobnication: How being the only people in the world with access to the Apollo lander source code makes us a wow at parties'', by Zeus \etal.
+Our main contributions can be summarized as follows:
+\begin{itemize}
+    \item To our knowledge, we are the first to provide a rigorous physical analysis of lens flare in event data, culminating in a \textbf{forward model} that formalizes the non-linear suppression mechanism underlying event stream corruption. This builds a theoretical foundation for de-flaring tasks in event-based vision.
 
-You can handle this paper like any other.
-Do not write ``We show how to improve our previous work [Anonymous, 1968].
-This time we tested the algorithm on a lunar lander [name of lander removed for blind review]''.
-That would be silly, and would immediately identify the authors.
-Instead write the following:
-\begin{quotation}
-\noindent
-   We describe a system for zero-g frobnication.
-   This system is new because it handles the following cases:
-   A, B.  Previous systems [Zeus et al. 1968] did not  handle case B properly.
-   Ours handles it by including a foo term in the bar integral.
+    \item Guided by our physical model, we introduce the first \textbf{simulation pipeline} that explicitly models non-linear flare corruption in event streams, enabling large-scale, physically-grounded paired training data for the first time.
 
-   ...
+    \item We design and contribute the \textbf{E-Deflare Benchmark}, the first comprehensive resource for the event camera de-flaring task, comprising a large-scale simulated dataset (\emph{E-Flare2.7K}), a curated set of real-world examples (\emph{DSEC-Flare}), and critically, the first-ever paired \textbf{real-world test set} (\emph{E-Flare-R}) for comprehensive evaluations and assessments.
 
-   The proposed system was integrated with the Apollo lunar lander, and went all the way to the moon, don't you know.
-   It displayed the following behaviours, which show how well we solved cases A and B: ...
-\end{quotation}
-As you can see, the above text follows standard scientific convention, reads better than the first version, and does not explicitly name you as the authors.
-A reviewer might think it likely that the new paper was written by Zeus \etal, but cannot make any decision based on that guess.
-He or she would have to be sure that no other authors could have been contracted to solve problem B.
-\medskip
+    \item We present \textbf{E-DeflareNet}, demonstrating that a standard network trained on our physically grounded data suffices to outperform all existing baselines and to improve downstream task performance.
+\end{itemize}
 
-\noindent
-FAQ\medskip\\
-{\bf Q:} Are acknowledgements OK?\\
-{\bf A:} No.  Leave them for the final copy.\medskip\\
-{\bf Q:} How do I cite my results reported in open challenges?
-{\bf A:} To conform with the double-blind review policy, you can report results of other challenge participants together with your results in your paper.
-For your results, however, you should not identify yourself and should not mention your participation in the challenge.
-Instead present your results referring to the method proposed in your paper and draw conclusions based on the experimental comparison to other results.\medskip\\
 
-\begin{figure}[t]
-  \centering
-  \fbox{\rule{0pt}{2in} \rule{0.9\linewidth}{0pt}}
-   %\includegraphics[width=0.8\linewidth]{egfigure.eps}
 
-   \caption{Example of caption.
-   It is set in Roman so that mathematics (always set in Roman: $B \sin A = A \sin B$) may be included without an ugly clash.}
-   \label{fig:onecol}
-\end{figure}
 
-\subsection{Miscellaneous}
 
-\noindent
-Compare the following:\\
-\begin{tabular}{ll}
- \verb'$conf_a$' &  $conf_a$ \\
- \verb'$\mathit{conf}_a$' & $\mathit{conf}_a$
-\end{tabular}\\
-See The \TeX book, p165.
 
-The space after \eg, meaning ``for example'', should not be a sentence-ending space.
-So \eg is correct, {\em e.g.} is not.
-The provided \verb'\eg' macro takes care of this.
 
-When citing a multi-author paper, you may save space by using ``et alia'', shortened to ``\etal'' (not ``{\em et.\ al.}'' as ``{\em et}'' is a complete word).
-If you use the \verb'\etal' macro provided, then you need not worry about double periods when used at the end of a sentence as in Alpher \etal.
-However, use it only when there are three or more authors.
-Thus, the following is correct:
-   ``Frobnication has been trendy lately.
-   It was introduced by Alpher~\cite{Alpher02}, and subsequently developed by
-   Alpher and Fotheringham-Smythe~\cite{Alpher03}, and Alpher \etal~\cite{Alpher04}.''
 
-This is incorrect: ``... subsequently developed by Alpher \etal~\cite{Alpher03} ...'' because reference~\cite{Alpher03} has just two authors.
 
-\begin{figure*}
-  \centering
-  \begin{subfigure}{0.68\linewidth}
-    \fbox{\rule{0pt}{2in} \rule{.9\linewidth}{0pt}}
-    \caption{An example of a subfigure.}
-    \label{fig:short-a}
-  \end{subfigure}
-  \hfill
-  \begin{subfigure}{0.28\linewidth}
-    \fbox{\rule{0pt}{2in} \rule{.9\linewidth}{0pt}}
-    \caption{Another example of a subfigure.}
-    \label{fig:short-b}
-  \end{subfigure}
-  \caption{Example of a short caption, which should be centered.}
-  \label{fig:short}
-\end{figure*}
+
+
+
+
+
+
+
+
+
+
+% Lens flare \cite{fowles1989introduction,hullin2011physically,wu2021train}, an optical artifact from internal scattering and reflections within a camera's lens, is a well-known source of degradation in conventional photography~\cite{wu2021train,zhou2023improving,dai2022flare7k,dai2024flare7k++,jiang2024mfdnet}. It severely compromises downstream computer vision tasks, motivating substantial research on flare removal in the image domain. Event cameras~\cite{gallego2020event, li2021recent, posch2014retinomorphic}, which asynchronously record light changes at the microsecond level, are increasingly critical in challenging vision tasks~\cite{tulyakov2022time,hagenaars2021self, li2022asynchronous, lin2024e2pnet, vemprala2021representation, wang2023visevent, zheng2023deep,gehrig2024low,han2024event,li2025active}. While their unique sensing paradigm offers advantages like high dynamic range, they are not immune to this fundamental optical limitation. Indeed, flare-like artifacts are visibly present in many prominent event camera datasets~\cite{gehrig2021dsec,gehrig2021raft,hu2020ddd20,binas2017ddd17,zhu2018multivehicle}, where they degrade data quality and affect downstream tasks~\cite{shi2023identifying,shi2024polarity,hidalgo2020learning}. However, these artifacts have generally been attributed to generic light source interference~\cite{shi2023identifying}, without a systematic analysis that identifies them as the distinct optical phenomenon of physical lens flare. We argue that lens flare in event cameras is a critical and overlooked problem. As illustrated in Fig.~\ref{fig:teaser}, it manifests as a highly complex spatio-temporal phenomenon, whose intricate patterns can be precisely explained by the underlying physics of lens flare.
+
+% This oversight has significant consequences. In event streams, lens flare manifests as large-scale, complex, and \textbf{spatio-temporally correlated} patterns. Existing event-based denoising methods~\cite{shi2024polarity, shi2023identifying, wang2022linear,guo2022low,duan2021eventzoom}, designed for random, uncorrelated noise or uniform flicker, are fundamentally ill-equipped to handle such structured artifacts. The contamination is not limited to adding spurious activity; as our theoretical analysis will explain, the strong flare signal can also suppress and distort legitimate event data from the background~\cite{muglikar2025event,valencia2023optically}, making the de-flaring task even more difficult.
+
+% To tackle such a complex artifact, a learning-based approach is the most promising path. However, this path is blocked by a fundamental obstacle: the absence of suitable training and testing data~\cite{dai2022flare7k,dai2024flare7k++}. Generating large-scale, perfectly-aligned paired data would require capturing a dynamic scene twice with pixel-perfect alignment—once with flare and once without. This is an extremely difficult task, as one cannot simply disable the optical effect without altering the scene's illumination, nor can one perfectly replicate the precise trajectory of any moving objects. This data acquisition challenge is even more severe for event cameras, which inherently capture dynamic information~\cite{gallego2020event}, making the alignment of trajectories exceptionally difficult. Furthermore, a naive workaround, such as applying an event simulator~\cite{hu2021v2e,lin2022dvs,joubert2021event,zhang2023v2ce,han2024physical} to existing paired frame datasets, is also untenable, as it would create a fully simulated dataset for both input and ground truth, introducing a significant sim-to-real gap.
+
+% To break this data deadlock, this paper presents \textbf{E-Deflare}, a systematic framework built upon a rigorous, physics-driven methodology. Our approach is founded on a deep analysis of the underlying optical principles, which enables a complete solution from theory to practice. We first establish a theoretical foundation for the problem, then leverage it to engineer a data-centric solution that makes learning-based de-flaring possible. We demonstrate the success of this framework by training a 3D U-Net-based architecture~\cite{10.7554/eLife.57613,cciccek20163d,lee2017superhuman} to effectively restore clean event streams.
+
+% Our main contributions are as follows:
+% \begin{itemize}
+%     \item \textbf{Theoretical Foundation.} We are the first to systematically identify lens flare in event cameras and derive a theoretical \textbf{forward model} that explains how it contaminates event streams via a non-linear suppression mechanism. This provides the physical basis for designing effective de-flaring strategies.
+    
+%     \item \textbf{Simulation for Training.} Based on our model, we build the first physics-driven \textbf{simulation pipeline} to generate a large-scale, paired dataset. This overcomes the primary bottleneck for training deep de-flaring networks.
+    
+%     \item \textbf{Real-World Validation and Benchmark.} We propose a novel method to acquire a paired \textbf{real-world test set}, enabling robust validation of sim-to-real generalization. We will release our synthetic and real datasets as the first public \textbf{benchmark} to foster future research in this area.
+% \end{itemize}

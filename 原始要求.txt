@@ -1,0 +1,394 @@
+LATEX Author Guidelines for WACV Proceedings
+Anonymous WACV Algorithms Track submission
+Paper ID *****
+Abstract
+The ABSTRACT is to be in fully justified italicized text, at001
+the top of the left-hand column, below the author and affil-002
+iation information. Use the word “Abstract” as the title, in003
+12-point Times, boldface type, centered relative to the col-004
+umn, initially capitalized. The abstract is to be in 10-point,005
+single-spaced type. Leave two blank lines after the Abstract,006
+then begin the main text. Look at previous WACV abstracts007
+to get a feel for style and length.008
+1. Introduction009
+Please follow the steps outlined below when submitting010
+your manuscript to the IEEE Computer Society Press. This011
+style guide now has several important modifications (for ex-012
+ample, you are no longer warned against the use of sticky013
+tape to attach your artwork to the paper), so all authors014
+should read this new version.015
+1.1. Language016
+All manuscripts must be in English.017
+1.2. Dual submission018
+Please refer to the author guidelines on the WACV 2027019
+web page for a discussion of the policy on dual submissions.020
+1.3. Paper length021
+Papers, excluding the references section, must be no longer022
+than eight pages in length. The references section will not023
+be included in the page count, and there is no limit on the024
+length of the references section. For example, a paper of025
+eight pages with two pages of references would have a total026
+length of 10 pages. There will be no extra page charges027
+for WACV 2027.028
+Overlength papers will simply not be reviewed. This in-029
+cludes papers where the margins and formatting are deemed030
+to have been significantly altered from those laid down by031
+this style guide. Note that this LATEX guide already sets fig-032
+ure captions and references in a smaller font. The reason033
+such papers will not be reviewed is that there is no provi- 034
+sion for supervised revisions of manuscripts. The review- 035
+ing process cannot determine the suitability of the paper for 036
+presentation in eight pages if it is reviewed in eleven. 037
+1.4. The ruler 038
+The LATEX style defines a printed ruler which should be 039
+present in the version submitted for review. The ruler is 040
+provided in order that reviewers may comment on partic- 041
+ular lines in the paper without circumlocution. If you are 042
+preparing a document using a non-LATEX document prepara- 043
+tion system, please arrange for an equivalent ruler to appear 044
+on the final output pages. The presence or absence of the 045
+ruler should not change the appearance of any other content 046
+on the page. The camera-ready copy should not contain a 047
+ruler. (LATEX users may use options of wacv.sty to switch 048
+between different versions.) 049
+Reviewers: note that the ruler measurements do not align 050
+well with lines in the paper — this turns out to be very dif- 051
+ficult to do well when the paper contains many figures and 052
+equations, and, when done, looks ugly. Just use fractional 053
+references (e.g., this line is 087.5), although in most cases 054
+one would expect that the approximate location will be ad- 055
+equate. 056
+1.5. Paper ID 057
+Make sure that the Paper ID from the submission system 058
+is visible in the version submitted for review (replacing the 059
+“*****” you see in this document). If you are using the 060
+LATEX template, make sure to update paper ID in the ap- 061
+propriate place in the tex file. 062
+1.6. Mathematics 063
+Please number all of your sections and displayed equations 064
+as in these examples: 065
+E = m · c2 (1) 066
+and 067
+v = a · t. (2) 068
+1
+WACV
+#*****
+WACV
+#*****
+WACV 2027 Submission #*****. Algorithms Track.
+It is important for readers to be able to refer to any particu-069
+lar equation. Just because you did not refer to it in the text070
+does not mean some future reader might not need to refer to071
+it. It is cumbersome to have to use circumlocutions like “the072
+equation second from the top of page 3 column 1”. (Note073
+that the ruler will not be present in the final copy, so is not074
+an alternative to equation numbers). All authors will benefit075
+from reading Mermin’s description of how to write math-076
+ematics: http://www.pamitc.org/documents/077
+mermin.pdf.078
+1.7. Blind review079
+Many authors misunderstand the concept of anonymizing080
+for blind review. Blind review does not mean that one must081
+remove citations to one’s own work—in fact it is often im-082
+possible to review a paper unless the previous citations are083
+known and available.084
+Blind review means that you do not use the words “my”085
+or “our” when citing previous work. That is all. (But see086
+below for tech reports.)087
+Saying “this builds on the work of Lucy Smith [1]” does088
+not say that you are Lucy Smith; it says that you are building089
+on her work. If you are Smith and Jones, do not say “as we090
+show in [7]”, say “as Smith and Jones show in [7]” and at091
+the end of the paper, include reference 7 as you would any092
+other cited work.093
+An example of a bad paper just asking to be rejected:094
+An analysis of the frobnicatable foo filter.095
+In this paper we present a performance analysis096
+of our previous paper [1], and show it to be in-097
+ferior to all previously known methods. Why the098
+previous paper was accepted without this analysis099
+is beyond me.100
+[1] Removed for blind review101
+An example of an acceptable paper:102
+An analysis of the frobnicatable foo filter.103
+In this paper we present a performance analysis of104
+the paper of Smith et al. [1], and show it to be in-105
+ferior to all previously known methods. Why the106
+previous paper was accepted without this analysis107
+is beyond me.108
+[1] Smith, L and Jones, C. “The frobnicatable109
+foo filter, a fundamental contribution to human110
+knowledge”. Nature 381(12), 1-213.111
+If you are making a submission to another conference at112
+the same time, which covers similar or overlapping mate-113
+rial, you may need to refer to that submission in order to114
+explain the differences, just as you would if you had pre-115
+viously published related work. In such cases, include the116
+anonymized parallel submission [5] as supplemental mate-117
+rial and cite it as118
+[1] Authors. “The frobnicatable foo filter”, F&G 119
+2014 Submission ID 324, Supplied as supplemen- 120
+tal material fg324.pdf. 121
+Finally, you may feel you need to tell the reader that 122
+more details can be found elsewhere, and refer them to 123
+a technical report. For conference submissions, the pa- 124
+per must stand on its own, and not require the reviewer 125
+to go to a tech report for further details. Thus, you may 126
+say in the body of the paper “further details may be found 127
+in [6]”. Then submit the tech report as supplemental ma- 128
+terial. Again, you may not assume the reviewers will read 129
+this material. 130
+Sometimes your paper is about a problem which you 131
+tested using a tool that is widely known to be restricted to a 132
+single institution. For example, let’s say it’s 1969, you have 133
+solved a key problem on the Apollo lander, and you believe 134
+that the 1970 audience would like to hear about your solu- 135
+tion. The work is a development of your celebrated 1968 136
+paper entitled “Zero-g frobnication: How being the only 137
+people in the world with access to the Apollo lander source 138
+code makes us a wow at parties”, by Zeus et al. 139
+You can handle this paper like any other. Do not write 140
+“We show how to improve our previous work [Anonymous, 141
+1968]. This time we tested the algorithm on a lunar lander 142
+[name of lander removed for blind review]”. That would be 143
+silly, and would immediately identify the authors. Instead 144
+write the following: 145
+We describe a system for zero-g frobnication. 146
+This system is new because it handles the fol- 147
+lowing cases: A, B. Previous systems [Zeus et al. 148
+1968] did not handle case B properly. Ours han- 149
+dles it by including a foo term in the bar integral. 150
+... 151
+The proposed system was integrated with the 152
+Apollo lunar lander, and went all the way to the 153
+moon, don’t you know. It displayed the follow- 154
+ing behaviours, which show how well we solved 155
+cases A and B: ... 156
+As you can see, the above text follows standard scientific 157
+convention, reads better than the first version, and does not 158
+explicitly name you as the authors. A reviewer might think 159
+it likely that the new paper was written by Zeus et al., but 160
+cannot make any decision based on that guess. He or she 161
+would have to be sure that no other authors could have been 162
+contracted to solve problem B. 163
+FAQ 164
+Q: Are acknowledgements OK? 165
+A: No. Leave them for the final copy. 166
+Q: How do I cite my results reported in open challenges? 167
+A: To conform with the double-blind review policy, you 168
+2
+WACV
+#*****
+WACV
+#*****
+WACV 2027 Submission #*****. Algorithms Track.
+Figure 1. Example of caption. It is set in Roman so that mathemat-
+ics (always set in Roman: B sin A = A sin B) may be included
+without an ugly clash.
+can report results of other challenge participants together169
+with your results in your paper. For your results, however,170
+you should not identify yourself and should not mention171
+your participation in the challenge. Instead present your172
+results referring to the method proposed in your paper and173
+draw conclusions based on the experimental comparison to174
+other results.175
+176
+1.8. Miscellaneous177
+Compare the following:178
+$conf_a$ confa
+$\mathit{conf}_a$ conf a
+179
+See The TEXbook, p165.180
+The space after e.g., meaning “for example”, should not181
+be a sentence-ending space. So e.g. is correct, e.g. is not.182
+The provided \eg macro takes care of this.183
+When citing a multi-author paper, you may save space184
+by using “et alia”, shortened to “et al.” (not “et. al.” as “et”185
+is a complete word). If you use the \etal macro provided,186
+then you need not worry about double periods when used at187
+the end of a sentence as in Alpher et al. However, use it only188
+when there are three or more authors. Thus, the following is189
+correct: “Frobnication has been trendy lately. It was intro-190
+duced by Alpher [1], and subsequently developed by Alpher191
+and Fotheringham-Smythe [2], and Alpher et al. [4].”192
+This is incorrect: “... subsequently developed by Alpher193
+et al. [2] ...” because reference [2] has just two authors.194
+2. Formatting your paper195
+All text must be in a two-column format. The total allow-196
+able size of the text area is 6 7
+8 inches (17.46 cm) wide by 8 7
+8197
+inches (22.54 cm) high. Columns are to be 3 1
+4 inches (8.25198
+cm) wide, with a 5
+16 inch (0.8 cm) space between them. The199
+main title (on the first page) should begin 1 inch (2.54 cm) 200
+from the top edge of the page. The second and following 201
+pages should begin 1 inch (2.54 cm) from the top edge. On 202
+all pages, the bottom margin should be 1 1
+8 inches (2.86 cm) 203
+from the bottom edge of the page for 8.5 × 11-inch paper; 204
+for A4 paper, approximately 1 5
+8 inches (4.13 cm) from the 205
+bottom edge of the page. 206
+2.1. Margins and page numbering 207
+All printed material, including text, illustrations, and charts, 208
+must be kept within a print area 6 7
+8 inches (17.46 cm) wide 209
+by 8 7
+8 inches (22.54 cm) high. Page numbers should be in 210
+the footer, centered and 3
+4 inches from the bottom of the 211
+page. The review version should have page numbers, yet 212
+the final version submitted as camera ready should not show 213
+any page numbers. The LATEX template takes care of this 214
+when used properly. 215
+2.2. Type style and fonts 216
+Wherever Times is specified, Times Roman may also be 217
+used. If neither is available on your word processor, please 218
+use the font closest in appearance to Times to which you 219
+have access. 220
+MAIN TITLE. Center the title 1 3
+8 inches (3.49 cm) from 221
+the top edge of the first page. The title should be in Times 222
+14-point, boldface type. Capitalize the first letter of nouns, 223
+pronouns, verbs, adjectives, and adverbs; do not capitalize 224
+articles, coordinate conjunctions, or prepositions (unless the 225
+title begins with such a word). Leave two blank lines after 226
+the title. 227
+AUTHOR NAME(s) and AFFILIATION(s) are to be 228
+centered beneath the title and printed in Times 12-point, 229
+non-boldface type. This information is to be followed by 230
+two blank lines. 231
+The ABSTRACT and MAIN TEXT are to be in a two- 232
+column format. 233
+MAIN TEXT. Type main text in 10-point Times, single- 234
+spaced. Do NOT use double-spacing. All paragraphs 235
+should be indented 1 pica (approx. 1
+6 inch or 0.422 cm). 236
+Make sure your text is fully justified—that is, flush left and 237
+flush right. Please do not place any additional blank lines 238
+between paragraphs. 239
+Figure and table captions should be 9-point Roman type 240
+as in Figs. 1 and 2. Short captions should be centred. 241
+Callouts should be 9-point Helvetica, non-boldface type. 242
+Initially capitalize only the first word of section titles and 243
+first-, second-, and third-order headings. 244
+FIRST-ORDER HEADINGS. (For example, 1. Intro- 245
+duction) should be Times 12-point boldface, initially cap- 246
+italized, flush left, with one blank line before, and one blank 247
+line after. 248
+SECOND-ORDER HEADINGS. (For example, 1.1. 249
+Database elements) should be Times 11-point boldface, 250
+3
+WACV
+#*****
+WACV
+#*****
+WACV 2027 Submission #*****. Algorithms Track.
+(a) An example of a subfigure. (b) Another example of a subfigure.
+Figure 2. Example of a short caption, which should be centered.
+initially capitalized, flush left, with one blank line before,251
+and one after. If you require a third-order heading (we dis-252
+courage it), use 10-point Times, boldface, initially capital-253
+ized, flush left, preceded by one blank line, followed by a254
+period and your text on the same line.255
+2.3. Footnotes256
+Please use footnotes1 sparingly. Indeed, try to avoid foot-257
+notes altogether and include necessary peripheral observa-258
+tions in the text (within parentheses, if you prefer, as in this259
+sentence). If you wish to use a footnote, place it at the bot-260
+tom of the column on the page on which it is referenced.261
+Use Times 8-point type, single-spaced.262
+2.4. Cross-references263
+For the benefit of author(s) and readers, please use the264
+\cref{...}265
+command for cross-referencing to figures, tables, equations,266
+or sections. This will automatically insert the appropriate267
+label alongside the cross-reference as in this example:268
+To see how our method outperforms previous269
+work, please see Fig. 1 and Tab. 1. It is also pos-270
+sible to refer to multiple targets as once, e.g. to271
+Figs. 1 and 2a. You may also return to Sec. 2 or272
+look at Eq. (2).273
+If you do not wish to abbreviate the label, for example at the274
+beginning of the sentence, you can use the275
+\Cref{...}276
+command. Here is an example:277
+Figure 1 is also quite important.278
+1This is what a footnote looks like. It often distracts the reader from
+the main flow of the argument.
+Method Frobnability
+Theirs Frumpy
+Yours Frobbly
+Ours Makes one’s heart Frob
+Table 1. Results. Ours is better.
+2.5. References 279
+List and number all bibliographical references in 9-point 280
+Times, single-spaced, at the end of your paper. When ref- 281
+erenced in the text, enclose the citation number in square 282
+brackets, for example [5]. Where appropriate, include page 283
+numbers and the name(s) of editors of referenced books. 284
+When you cite multiple papers at once, please make sure 285
+that you cite them in numerical order like this [1–3, 5, 6]. If 286
+you use the template as advised, this will be taken care of 287
+automatically. 288
+2.6. Illustrations, graphs, and photographs 289
+All graphics should be centered. In LATEX, avoid using the 290
+center environment for this purpose, as this adds poten- 291
+tially unwanted whitespace. Instead use 292
+\centering 293
+at the beginning of your figure. Please ensure that any point 294
+you wish to make is resolvable in a printed copy of the pa- 295
+per. Resize fonts in figures to match the font in the body 296
+text, and choose line widths that render effectively in print. 297
+Readers (and reviewers), even of an electronic copy, may 298
+choose to print your paper in order to read it. You cannot 299
+insist that they do otherwise, and therefore must not assume 300
+that they can zoom in to see tiny details on a graphic. 301
+When placing figures in LATEX, it’s almost always best to 302
+use \includegraphics, and to specify the figure width 303
+as a multiple of the line width as in the example below 304
+4
+WACV
+#*****
+WACV
+#*****
+WACV 2027 Submission #*****. Algorithms Track.
+\usepackage{graphicx} ...305
+\includegraphics[width=0.8\linewidth]306
+{myfile.pdf}307
+2.7. Color308
+Please refer to the author guidelines on the WACV 2027309
+web page for a discussion of the use of color in your docu-310
+ment.311
+If you use color in your plots, please keep in mind that a312
+significant subset of reviewers and readers may have a color313
+vision deficiency; red-green blindness is the most frequent314
+kind. Hence avoid relying only on color as the discrimina-315
+tive feature in plots (such as red vs. green lines), but add a316
+second discriminative feature to ease disambiguation.317
+3. Final copy318
+You must include your signed IEEE copyright release form319
+when you submit your finished paper. We MUST have this320
+form before your paper can be published in the proceedings.321
+Please direct any questions to the production editor in322
+charge of these proceedings at the IEEE Computer Soci-323
+ety Press: https://www.computer.org/about/324
+contact.325
+References326
+[1] FirstName Alpher. Frobnication. IEEE TPAMI, 12(1):234–327
+778, 2002. 3, 4328
+[2] FirstName Alpher and FirstName Fotheringham-Smythe.329
+Frobnication revisited. Journal of Foo, 13(1):234–778, 2003.330
+3331
+[3] FirstName Alpher and FirstName Gamow. Can a computer332
+frobnicate? In ICCV, pages 234–778, 2005. 4333
+[4] FirstName Alpher, FirstName Fotheringham-Smythe, and334
+FirstName Gamow. Can a machine frobnicate? Journal of335
+Foo, 14(1):234–778, 2004. 3336
+[5] FirstName LastName. The frobnicatable foo filter, 2014. Face337
+and Gesture submission ID 324. Supplied as supplemental338
+material fg324.pdf. 2, 4339
+[6] FirstName LastName. Frobnication tutorial, 2014. Supplied340
+as supplemental material tr.pdf. 2, 4
