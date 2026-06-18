@@ -52,7 +52,7 @@ The resulting dataset contains $\mathbf{2{,}720}$ paired $20$~ms samples at $640
 \textbf{E-Flare-R} is the first paired real-world benchmark for event-based de-flaring, capturing the same scene under distinct optical impulse responses.
 
 \noindent\textbf{Acquisition Setup.}
-A Prophesee EVK4-HD event camera ($1280 \times 720$) is used with a custom rig of removable optical filters (six-point star filter and random-pattern filters). High-intensity light sources — a frequency-controllable point light and a square Tungsten lamp — are placed within the FoV to produce diverse flare artifacts.
+A Prophesee EVK4-HD event camera ($1280 \times 720$) is used with a custom rig of removable optical filters (six-point star filter and random-pattern filters). High-intensity light sources, including a frequency-controllable point light and a square Tungsten lamp, are placed within the FoV to produce diverse flare artifacts.
 
 \noindent\textbf{Capture Protocol.}
 A strict two-pass protocol is executed per scene: (1) \textbf{Observation Pass}: scene recorded with filter mounted; (2) \textbf{Reference Pass}: filter immediately removed, same scene re-recorded with camera rigidly static.
@@ -349,7 +349,7 @@ This section provides comprehensive details regarding our experimental setup, in
     For both variants we use a temporal window of $20$~ms and a spatial neighborhood size of $3$, invoking the original C++ executable via a Python wrapper to ensure full algorithmic consistency.
 
     \subsubsection{Voxel Transform}
-    The \emph{Voxel Transform} baseline serves as a control experiment isolating the contribution of E-DeflareNet from any implicit filtering effects of the codec. The input event stream is encoded into a voxel grid and immediately decoded back without any learned processing — effectively setting $f_{\theta}(\cdot) = 0$. Any performance improvement of our full model over this baseline is therefore directly attributable to the network's learned de-flaring capability.
+    The \emph{Voxel Transform} baseline serves as a control experiment isolating the contribution of E-DeflareNet from any implicit filtering effects of the codec. The input event stream is encoded into a voxel grid and immediately decoded back without any learned processing, effectively setting $f_{\theta}(\cdot) = 0$. Any performance improvement of our full model over this baseline is therefore directly attributable to the network's learned de-flaring capability.
 
 \subsection{Detailed Definition of Evaluation Metrics}
 \label{app:metrics_details}
@@ -399,7 +399,7 @@ This section presents additional qualitative results to further demonstrate the 
 
 \subsection{Robustness in Typical Urban Scenarios}
 
-Figs.~\ref{APfig:supp_1} and~\ref{APfig:supp_2} show scenarios typical of urban night driving, dominated by strong periodic interference from streetlights — a distribution closely mirroring real-world conditions in DSEC~\cite{gehrig2021dsec}. Aggressive filtering baselines suppress artifacts but erroneously remove valid background events, losing scene detail. General denoising methods (\eg, PFD-A) misinterpret large-scale structured flare as a valid signal, leaving artifacts intact. In contrast, \textbf{E-DeflareNet} accurately parses the flare structure, achieving precise removal while robustly preserving background event density.
+Figs.~\ref{APfig:supp_1} and~\ref{APfig:supp_2} show scenarios typical of urban night driving, dominated by strong periodic interference from streetlights, a distribution closely mirroring real-world conditions in DSEC~\cite{gehrig2021dsec}. Aggressive filtering baselines suppress artifacts but erroneously remove valid background events, losing scene detail. General denoising methods (\eg, PFD-A) misinterpret large-scale structured flare as a valid signal, leaving artifacts intact. In contrast, \textbf{E-DeflareNet} accurately parses the flare structure, achieving precise removal while robustly preserving background event density.
 
 \begin{figure}[H]
     \centering
