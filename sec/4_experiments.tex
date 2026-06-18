@@ -2,7 +2,7 @@
 \label{sec:experiments}
 % This section presents quantitative \& qualitative experiments on event de-flaring.
 
-\begin{table*}[!tbp]
+\begin{table*}[!bp]
     \centering
     \caption{\textbf{Quantitative comparisons on the E-Flare2.7K test set}. We evaluate against five event-based de-flaring baselines using event-level and voxel-level metrics, respectively. Cell backgrounds highlight the \colorbox{gray!20}{raw baseline}, \colorbox{ev_red!20}{second-best}, and \colorbox{ev_blue!20}{best} value per metric. The final row shows the percentage improvement of our method over the second-best ($\downarrow$: lower is better, $\uparrow$: higher is better). Ch. = Chamfer Distance; Gau. = Gaussian Distance; PM2/PM4 = Pooled MSE at scales 2/4.}
     \vspace{-0.3cm}
@@ -63,7 +63,7 @@ Our model is trained on \textbf{E-Flare2.7K} for $40$k iterations on a single NV
 \noindent\textbf{Evaluation on Simulated Data.}
 Table~\ref{tab:main_sim_quant} shows that existing methods are ill-suited for event-based de-flaring. Their rule-based filtering fails to distinguish structured flare patterns from legitimate events, often removing valid signals. In contrast, our learning-based model effectively captures the flare's non-local, spatio-temporal characteristics, enabling it to selectively remove artifacts while preserving scene dynamics. This yields, for instance, a $\mathbf{64.2\%}$ improvement in Chamfer distance and a $\mathbf{55.5\%}$ improvement in MSE over the next-best method.
 
-\begin{figure*}[!tbp]
+\begin{figure*}[!tp]
     \centering
     \includegraphics[width=\textwidth]{figures/simu_R.pdf}
     \vspace{-0.6cm}
@@ -78,7 +78,7 @@ Table~\ref{tab:main_sim_quant} shows that existing methods are ill-suited for ev
 \noindent\textbf{Evaluation on Paired Real-World Data.}
 Our model, trained \emph{solely} on simulated data, generalizes zero-shot to real-world data. Table~\ref{tab:main_real_quant} shows consistent performance trends. \textbf{E-DeflareNet} significantly outperforms all baselines on most key metrics, such as $\mathbf{35.6\%}$ in Chamfer distance. While TP-F1 shows a slight decrease (-$8.3\%$), this reflects a conservative strategy that prioritizes high fidelity by avoiding false positives over aggressively recovering every noisy event. This trade-off yields superior results on stricter metrics like Chamfer and R-F1. Overall, these results validate model robustness and pipeline effectiveness.
 
-\begin{table*}[!tbp]
+\begin{table*}[!bp]
     \centering
     \caption{\textbf{Quantitative comparisons on the E-Flare-R dataset}. We evaluate against five event-based de-flaring baselines using event-level and voxel-level metrics, respectively. Cell backgrounds highlight the \colorbox{gray!20}{raw baseline}, \colorbox{ev_red!20}{second-best}, and \colorbox{ev_blue!20}{best} value per metric. The final row shows the percentage improvement of our method over the second-best ($\downarrow$: lower is better, $\uparrow$: higher is better). Ch. = Chamfer Distance; Gau. = Gaussian Distance; PM2/PM4 = Pooled MSE at scales 2/4.}
     \vspace{-0.3cm}
@@ -110,7 +110,7 @@ Our model, trained \emph{solely} on simulated data, generalizes zero-shot to rea
     \vspace{-0.3cm}
 \end{table*}
 
-\begin{figure*}[!tbp]
+\begin{figure*}[!tp]
     \centering
     \includegraphics[width=\textwidth]{figures/real_R.pdf}
     \vspace{-0.6cm}
@@ -142,7 +142,7 @@ Second, the substantial gap between \emph{Simple} and our \emph{Full Model} (Cha
 These ablations confirm that the success of \textbf{E-Deflare} arises from principled physical modeling: (1) maintaining correct light source semantics in training targets, and (2) implementing the non-linear event suppression mechanism derived from the irradiance-domain interaction model.
 
 
-\begin{table*}[!tbp]
+\begin{table*}[!bp]
     \centering
     \caption{\textbf{Ablation study on the E-Flare-R dataset}. We evaluate three variants to analyze our core design choices. The final row shows the improvement of our full model over the best ablated variant ($\downarrow$: lower is better, $\uparrow$: higher is better). Ch. = Chamfer Distance; Gau. = Gaussian Distance; PM2/PM4 = Pooled MSE at scales 2/4.}
     \vspace{-0.3cm}
