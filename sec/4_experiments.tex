@@ -1,8 +1,4 @@
-\section{Experiments}
-\label{sec:experiments}
-% This section presents quantitative \& qualitative experiments on event de-flaring.
-
-\begin{table*}[!bp]
+\begin{table*}[!tbp]
     \centering
     \caption{\textbf{Quantitative comparisons on the E-Flare2.7K test set}. We evaluate against five event-based de-flaring baselines using event-level and voxel-level metrics, respectively. Cell backgrounds highlight the \colorbox{gray!20}{raw baseline}, \colorbox{ev_red!20}{second-best}, and \colorbox{ev_blue!20}{best} value per metric. The final row shows the percentage improvement of our method over the second-best ($\downarrow$: lower is better, $\uparrow$: higher is better). Ch. = Chamfer Distance; Gau. = Gaussian Distance; PM2/PM4 = Pooled MSE at scales 2/4.}
     \vspace{-0.3cm}
@@ -34,6 +30,10 @@
     \vspace{-0.3cm}
 \end{table*}
 
+\section{Experiments}
+\label{sec:experiments}
+% This section presents quantitative \& qualitative experiments on event de-flaring.
+
 \subsection{Experimental Settings}
 
 Our proposed model is trained exclusively on \emph{E-Flare2.7K-train}, and tested on \emph{E-Flare2.7K-test}, \emph{E-Flare-R}, and \emph{DSEC-Flare} datasets, respectively.
@@ -63,7 +63,7 @@ Our model is trained on \textbf{E-Flare2.7K} for $40$k iterations on a single NV
 \noindent\textbf{Evaluation on Simulated Data.}
 Table~\ref{tab:main_sim_quant} shows that existing methods are ill-suited for event-based de-flaring. Their rule-based filtering fails to distinguish structured flare patterns from legitimate events, often removing valid signals. In contrast, our learning-based model effectively captures the flare's non-local, spatio-temporal characteristics, enabling it to selectively remove artifacts while preserving scene dynamics. This yields, for instance, a $\mathbf{64.2\%}$ improvement in Chamfer distance and a $\mathbf{55.5\%}$ improvement in MSE over the next-best method.
 
-\begin{figure*}[!tp]
+\begin{figure*}[!tbp]
     \centering
     \includegraphics[width=\textwidth]{figures/simu_R.pdf}
     \vspace{-0.6cm}
@@ -78,7 +78,7 @@ Table~\ref{tab:main_sim_quant} shows that existing methods are ill-suited for ev
 \noindent\textbf{Evaluation on Paired Real-World Data.}
 Our model, trained \emph{solely} on simulated data, generalizes zero-shot to real-world data. Table~\ref{tab:main_real_quant} shows consistent performance trends. \textbf{E-DeflareNet} significantly outperforms all baselines on most key metrics, such as $\mathbf{35.6\%}$ in Chamfer distance. While TP-F1 shows a slight decrease (-$8.3\%$), this reflects a conservative strategy that prioritizes high fidelity by avoiding false positives over aggressively recovering every noisy event. This trade-off yields superior results on stricter metrics like Chamfer and R-F1. Overall, these results validate model robustness and pipeline effectiveness.
 
-\begin{table*}[!bp]
+\begin{table*}[!tbp]
     \centering
     \caption{\textbf{Quantitative comparisons on the E-Flare-R dataset}. We evaluate against five event-based de-flaring baselines using event-level and voxel-level metrics, respectively. Cell backgrounds highlight the \colorbox{gray!20}{raw baseline}, \colorbox{ev_red!20}{second-best}, and \colorbox{ev_blue!20}{best} value per metric. The final row shows the percentage improvement of our method over the second-best ($\downarrow$: lower is better, $\uparrow$: higher is better). Ch. = Chamfer Distance; Gau. = Gaussian Distance; PM2/PM4 = Pooled MSE at scales 2/4.}
     \vspace{-0.3cm}
@@ -110,7 +110,7 @@ Our model, trained \emph{solely} on simulated data, generalizes zero-shot to rea
     \vspace{-0.3cm}
 \end{table*}
 
-\begin{figure*}[!tp]
+\begin{figure*}[!tbp]
     \centering
     \includegraphics[width=\textwidth]{figures/real_R.pdf}
     \vspace{-0.6cm}
@@ -128,21 +128,7 @@ Figs.~\ref{fig:qualitative_sim}--\ref{fig:qualitative_real} further confirm thes
 \subsection{Ablation Study}
 \label{sec:ablation}
 
-We ablate three design variants on E-Flare-R (Table~\ref{tab:ablation_main}):
-\textbf{(1)} \emph{No Light}: ground truth incorrectly removes the light source, treating de-flaring as complete elimination;
-\textbf{(2)} \emph{Simple}: direct additive fusion, ignoring irradiance superposition physics;
-\textbf{(3)} \emph{Full Model (Ours)}: full physics-guided synthesis  as described above.
-% \textbf{(4)} \emph{Full Model + Jitter}: our method with additional temporal jitter augmentation to test whether gains stem from physical modeling or stochastic augmentation.
-
-The results reveal a clear performance hierarchy.
-First, the catastrophic failure of \emph{No Light} (Chamfer: $1.9745$ \vs $1.1368$ for ours) confirms that \textbf{preserving the actual light source in ground truth is essential}. This variant treats all flare-related events as noise to be removed, destroying semantically valid illumination.
-Second, the substantial gap between \emph{Simple} and our \emph{Full Model} (Chamfer: $1.3434$ \vs $1.1368$, a $15.4\%$ improvement) validates the necessity of \textbf{physics-guided event fusion}. The simple additive approach implicitly sets $w_{\mathrm{bg}} = 1$ regardless of relative irradiance, ignoring the physical weighting derived in Sec.~\ref{ssec:forward_model}. This is especially damaging in flare-dominated regions where $w_{\mathrm{bg}} \to 0$: it erroneously preserves all background events that the real sensor would suppress, training the network on physically implausible data.
-% Third, and crucially, the performance drop in \emph{Full Model + Jitter} (Chamfer: $1.6811$ \vs $1.1368$, a $47.9\%$ degradation) demonstrates that \textbf{our gains arise from physical insight, not data augmentation}. The temporal jitter severs the strict spatio-temporal correspondence between each event and its physical weight $w_{\mathrm{bg}}(t)$, which is precisely what PNL-ES's probabilistic approximation relies on. This confirms that our method implements a rigorous physical approximation rather than random dropout.
-
-These ablations confirm that the success of \textbf{E-Deflare} arises from principled physical modeling: (1) maintaining correct light source semantics in training targets, and (2) implementing the non-linear event suppression mechanism derived from the irradiance-domain interaction model.
-
-
-\begin{table*}[!bp]
+\begin{table*}[!tbp]
     \centering
     \caption{\textbf{Ablation study on the E-Flare-R dataset}. We evaluate three variants to analyze our core design choices. The final row shows the improvement of our full model over the best ablated variant ($\downarrow$: lower is better, $\uparrow$: higher is better). Ch. = Chamfer Distance; Gau. = Gaussian Distance; PM2/PM4 = Pooled MSE at scales 2/4.}
     \vspace{-0.3cm}
@@ -172,6 +158,19 @@ These ablations confirm that the success of \textbf{E-Deflare} arises from princ
     }%
 \vspace{-0.2cm}
 \end{table*}
+
+We ablate three design variants on E-Flare-R (Table~\ref{tab:ablation_main}):
+\textbf{(1)} \emph{No Light}: ground truth incorrectly removes the light source, treating de-flaring as complete elimination;
+\textbf{(2)} \emph{Simple}: direct additive fusion, ignoring irradiance superposition physics;
+\textbf{(3)} \emph{Full Model (Ours)}: full physics-guided synthesis  as described above.
+% \textbf{(4)} \emph{Full Model + Jitter}: our method with additional temporal jitter augmentation to test whether gains stem from physical modeling or stochastic augmentation.
+
+The results reveal a clear performance hierarchy.
+First, the catastrophic failure of \emph{No Light} (Chamfer: $1.9745$ \vs $1.1368$ for ours) confirms that \textbf{preserving the actual light source in ground truth is essential}. This variant treats all flare-related events as noise to be removed, destroying semantically valid illumination.
+Second, the substantial gap between \emph{Simple} and our \emph{Full Model} (Chamfer: $1.3434$ \vs $1.1368$, a $15.4\%$ improvement) validates the necessity of \textbf{physics-guided event fusion}. The simple additive approach implicitly sets $w_{\mathrm{bg}} = 1$ regardless of relative irradiance, ignoring the physical weighting derived in Sec.~\ref{ssec:forward_model}. This is especially damaging in flare-dominated regions where $w_{\mathrm{bg}} \to 0$: it erroneously preserves all background events that the real sensor would suppress, training the network on physically implausible data.
+% Third, and crucially, the performance drop in \emph{Full Model + Jitter} (Chamfer: $1.6811$ \vs $1.1368$, a $47.9\%$ degradation) demonstrates that \textbf{our gains arise from physical insight, not data augmentation}. The temporal jitter severs the strict spatio-temporal correspondence between each event and its physical weight $w_{\mathrm{bg}}(t)$, which is precisely what PNL-ES's probabilistic approximation relies on. This confirms that our method implements a rigorous physical approximation rather than random dropout.
+
+These ablations confirm that the success of \textbf{E-Deflare} arises from principled physical modeling: (1) maintaining correct light source semantics in training targets, and (2) implementing the non-linear event suppression mechanism derived from the irradiance-domain interaction model.
 
 
 \subsection{Downstream Task Evaluations}
