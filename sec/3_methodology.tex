@@ -25,24 +25,24 @@ To model lens flare in event streams, we establish a physical model of the \emph
 \begin{equation}
     \mathbf{I}_{\mathrm{gt}}(x, y, t) = \mathbf{I}_{\mathrm{bg}}(x, y, t) + \mathbf{I}_{\mathrm{light}}(x, y, t)~.
 \end{equation}
-In contrast, a \textbf{real lens} $\mathcal{L}_{\mathrm{real}}$ introduces reflections and scattering that corrupt this formation. While the background remains largely unaffected, the bright light source produces a spatially expansive, structured flare component $\mathbf{I}_{\textcolor{ev_red}{\mathrm{\mathbf{f}}}}$ that subsumes both the distorted direct illumination and the additional scattered energy, thereby replacing $\mathbf{I}_{\mathrm{light}}$ in the observed irradiance. The resulting observed irradiance $\mathbf{I}_{\mathrm{ob}}$ can thus be approximated by a linear superposition in the intensity domain~\cite{dai2022flare7k,wu2021train,dai2024flare7k++}. This process is formulated as follows:
+In contrast, a \textbf{real lens} $\mathcal{L}_{\mathrm{real}}$ introduces reflections and scattering that corrupt this formation. While the background remains largely unaffected, the bright light source produces a spatially expansive, structured flare component $\mathbf{I}_{\textcolor{ev_red}{\mathrm{\mathbf{f}}}}$ that subsumes both the distorted direct illumination and the additional scattered energy, thereby replacing $\mathbf{I}_{\mathrm{light}}$ in the observed irradiance. The  observed irradiance $\mathbf{I}_{\mathrm{ob}}$ can thus be approximated by a linear superposition in the intensity domain~\cite{dai2022flare7k,wu2021train,dai2024flare7k++}. This process is formulated as follows:
 \begin{equation}
     \mathbf{I}_{\mathrm{ob}}(x, y, t) \approx \mathbf{I}_{\mathrm{bg}}(x, y, t) + \mathbf{I}_{\textcolor{ev_red}{\mathrm{\mathbf{f}}}}(x, y, t)~.
 \label{eq:image_superposition_final}
 \end{equation}
 This intensity-domain corruption occurs \emph{before} the sensor and forms the foundation of our event-level analysis. For brevity, we omit coordinates $(x, y)$ where context is clear.
 
-An event camera sensor $\mathcal{S}_{\mathrm{evt}}(\cdot)$ operates on this corrupted irradiance $\mathbf{I}_{\mathrm{ob}}$. Unlike conventional cameras that capture frames at fixed intervals, $\mathcal{S}_{\mathrm{evt}}$ is a stateful process: each pixel independently monitors its log-intensity $L(t) = \log(\mathbf{I}_{\mathrm{ob}}(t))$ and asynchronously triggers an event when the accumulated change since the last event exceeds a contrast threshold $c$. Mathematically, an event is fired at time $t_i$ when:
+An event camera sensor $\mathcal{S}_{\mathrm{evt}}(\cdot)$ operates on this corrupted irradiance $\mathbf{I}_{\mathrm{ob}}$. Unlike conventional cameras that capture frames at fixed intervals, $\mathcal{S}_{\mathrm{evt}}$ is a stateful process: each pixel independently monitors its log-intensity $L(t) = \log(\mathbf{I}_{\mathrm{ob}}(t))$ and asynchronously triggers an event when the accumulated change exceeds a contrast threshold $c$. Mathematically, an event is fired at time $t_i$ when:
 \begin{equation}
     |L(t_i) - L(t_{\mathrm{last}})| \ge c~,
     \label{eq:event_threshold_condition}
 \end{equation}
-where $t_{\mathrm{last}}$ denotes the timestamp of the preceding event at that pixel. The polarity $p_i = \mathrm{sign}(L(t_i) - L(t_{\mathrm{last}})) \in \{+1, -1\}$ encodes the direction of the intensity change. The resulting event stream $\mathbf{E}(t)$ is represented as a sum of Dirac impulses:
+where $t_{\mathrm{last}}$ denotes the timestamp of the preceding event at that pixel. The polarity $p_i = \mathrm{sign}(L(t_i) - L(t_{\mathrm{last}})) \in \{+1, -1\}$ encodes the direction of the intensity change. The resulting event stream $\mathbf{E}(t)$ can be represented as :
 \begin{equation}
     \mathbf{E}(t) = \mathcal{S}_{\mathrm{evt}}(\mathbf{I}_{\mathrm{ob}}(t)) = \sum\nolimits_{i} p_i \delta(t - t_i)~,
     \label{eq:event_stream_definition}
 \end{equation}
-where $\delta(\cdot)$ is the Dirac delta function. This yields an integral relationship between log-intensity and the event stream:
+where $\delta(\cdot)$ is the Dirac delta function. This yields an integral relationship between log-intensity and $\mathbf{E}(t)$:
 \begin{equation}
     L(t) = c \int_{0}^{t} \mathbf{E}(\tau) \, d\tau + L(0) + \varepsilon(t)~,
     \label{eq:sensor_model_integral_redef}
@@ -62,7 +62,7 @@ where $\xi(t) \triangleq d\varepsilon(t)/dt$ is the \emph{residual rate}. Eq.~\r
     \frac{dL_{\mathrm{ob}}(t)}{dt} = w_{\mathrm{bg}}(t) \frac{dL_{\mathrm{bg}}(t)}{dt} + w_{\textcolor{ev_red}{\mathrm{\mathbf{f}}}}(t) \frac{dL_{\textcolor{ev_red}{\mathrm{\mathbf{f}}}}(t)}{dt}~,
     \label{eq:log_derivative_mixing}
 \end{equation}
-where $L_{\mathrm{bg}}(t) \triangleq \log \mathbf{I}_{\mathrm{bg}}(t)$ and $L_{\textcolor{ev_red}{\mathrm{\mathbf{f}}}}(t) \triangleq \log \mathbf{I}_{\textcolor{ev_red}{\mathrm{\mathbf{f}}}}(t)$ are the component log-intensities, and the \emph{intensity-weighted} coefficients are defined as:
+where $L_{\mathrm{bg}}(t) \triangleq \log \mathbf{I}_{\mathrm{bg}}(t)$ and $L_{\textcolor{ev_red}{\mathrm{\mathbf{f}}}}(t) \triangleq \log \mathbf{I}_{\textcolor{ev_red}{\mathrm{\mathbf{f}}}}(t)$, and the  coefficients are defined as:
 \begin{equation}
     w_{\mathrm{bg}}(t) = \frac{\mathbf{I}_{\mathrm{bg}}(t)}{\mathbf{I}_{\mathrm{bg}}(t) + \mathbf{I}_{\textcolor{ev_red}{\mathrm{\mathbf{f}}}}(t)}~,~~ w_{\textcolor{ev_red}{\mathrm{\mathbf{f}}}}(t) = 1-w_{\mathrm{bg}}(t)~.
     \label{eq:weights_definition}
@@ -70,7 +70,7 @@ where $L_{\mathrm{bg}}(t) \triangleq \log \mathbf{I}_{\mathrm{bg}}(t)$ and $L_{\
 This reveals that although intensities superpose linearly, their logarithmic derivatives mix through a weighted sum: the physical origin of the \textbf{non-linear suppression effect}.
 
 
-\textbf{Complete Forward Model.} Substituting the dual representation (\ie, Eq.~\ref{eq:continuous_link}) for each component into Eq.~\ref{eq:log_derivative_mixing}, we obtain the full mixing equation:
+\textbf{Complete Forward Model.} Substituting the dual representation (\ie, Eq.~\ref{eq:continuous_link}) into Eq.~\ref{eq:log_derivative_mixing}, we obtain:
 \begin{equation}
     \begin{aligned}
     \frac{dL_{\mathrm{ob}}(t)}{dt} ={}&
@@ -86,7 +86,7 @@ where $\xi_{\mathrm{bg}}(t)$ and $\xi_{\textcolor{ev_red}{\mathrm{\mathbf{f}}}}(
     \mathbf{E}_{\mathrm{ob}}(t) = \mathcal{S}_{\mathrm{evt}}\left( \exp\left( \int_{0}^{t} \Phi(\tau) \, d\tau + L_{\mathrm{ob}}(0) \right) \right)~,
     \label{eq:full_forward_model}
 \end{equation}
-where the integrand $\Phi(\tau)$ represents the mixed log-rate potential:
+where the integrand $\Phi(\tau)$ represents :
 \begin{equation}
     \begin{aligned}
     \Phi(\tau) ={}&
@@ -108,7 +108,7 @@ The first line contains the weighted impulse terms, and the second line contains
 \label{ssec:simulator}
 
 
-As illustrated in Fig.~\ref{fig:methodology-flowchart}, the pipeline operates in two stages: \textbf{Stage 1} generates pure flare events by extending image-based methods~\cite{dai2024flare7k++} to the temporal domain (additional details in Appendix), while \textbf{Stage 2 implements the physics-driven event composition mechanism}, the core contribution of this work.
+As illustrated in Fig.~\ref{fig:methodology-flowchart}, the pipeline operates in two stages: \textbf{Stage 1} generates pure flare events by extending image-based methods~\cite{dai2024flare7k++} to the event domain, while \textbf{Stage 2 implements the physics-driven event composition mechanism}, the core contribution of this work.
 
 
 $\bullet$~\textbf{Stage 1: Pure Flare Simulation in Events.}
@@ -130,7 +130,7 @@ Using this operator, we construct both the flare-corrupted input and its corresp
 The required data assets are assembled accordingly. Real-world background events $\mathbf{E}_{\mathrm{bg}}$ with diverse real-world motion are sampled from DSEC~\cite{gehrig2021dsec}, while intensity profiles for retention probability are obtained from Stage 1's synthetic outputs ($\mathbf{I}_{\textcolor{ev_red}{\mathrm{\mathbf{f}}}}$ and $\mathbf{I}_{\mathrm{light}}$) and estimated from the available event data ($\mathbf{I}_{\mathrm{bg}}$), all of which are sufficient for the probabilistic PNL-ES formulation.
 
 
-This pipeline yields a large-scale, physically grounded training dataset. By anchoring synthesis to real background events (which dominate event density), we effectively mitigate the sim-to-real gap of fully synthetic systems. As validated below, this facilitates generalization to \emph{real-world} data.
+This pipeline yields a large-scale, physically grounded training dataset. By anchoring synthesis to real background events (which dominate event density), we  mitigate the sim-to-real gap of fully synthetic systems. As validated below, this facilitates generalization to \emph{real-world} data.
 
 
 
@@ -141,7 +141,7 @@ Validation faces the practical impossibility of capturing \emph{perfectly aligne
 
 \textbf{Capture Setup.} We mount a removable optical filter (\eg, six-line star filters) in front of the lens (Fig.~\ref{fig:methodology-flowchart}). The protocol involves two consecutive recordings of the same scene: one with the filter in place to capture the flare-corrupted stream $\mathbf{E}_{\mathrm{ob}}$, and another immediately after its removal to acquire the near-clean reference $\tilde{\mathbf{E}}_{\mathrm{gt}}$. Multiple filter types introduce diversity in flare patterns.
 
-\textbf{Event-Specific Alignment Strategy.} Unlike frame-based cameras, event cameras possess microsecond-level temporal sensitivity, making precise alignment difficult if either the camera or the scene moves; even slight mechanical errors during filter removal cause misalignment. To address this, we fix the camera and illuminate with high-frequency flickering light sources (\eg, LED arrays). Spatial alignment follows automatically; temporal alignment is achieved by synchronizing streams to the flickering pattern. This yields a small-scale but high-fidelity real-world validation set.
+\textbf{Event-Specific Alignment Strategy.} Unlike frame-based cameras, event cameras possess microsecond-level temporal sensitivity, making precise alignment difficult if either the camera or the scene moves; Therefore, there is currently no such paired dataset. To address this, we fix the camera and illuminate with high-frequency flickering light sources (\eg, LED arrays). Spatial alignment follows automatically; temporal alignment is achieved by synchronizing streams to the flickering pattern. This yields a small-scale but high-fidelity real-world validation set.
 
 \begin{figure}[!t]
     \centering
@@ -150,24 +150,25 @@ Validation faces the practical impossibility of capturing \emph{perfectly aligne
     \caption{Data samples from our benchmark, shown alongside a reference RGB frame (top left). The benchmark includes: a real-world flare example from \textbf{DSEC-Flare} (top right); a synthetic sample from \textbf{E-Flare2.7K} (bottom left); and a paired real-world sample from our test set \textbf{E-Flare-R} (bottom right).}
     \label{fig:2x2}
 \end{figure}
-\textbf{Post-Processing.} The captured stream $\tilde{\mathbf{E}}_{\mathrm{gt}}$ undergoes residual artifact suppression (facilitated by the known light source geometry) and metric-guided spatio-temporal refinement to yield the final ground truth $\mathbf{E}_{\mathrm{gt}}$. While this protocol is designed for controlled validation and does not cover scenarios involving camera or scene motion (which would make alignment infeasible), our training pipeline (as discussed in Sec.~\ref{ssec:simulator}) supports spatial variability through random transformations, with generalization to unconstrained scenarios demonstrated on DSEC-Flare (Sec.~\ref{sec:downstream}).
+\textbf{Post-Processing.} The captured stream $\tilde{\mathbf{E}}_{\mathrm{gt}}$ undergoes residual artifact suppression (facilitated by the known light source geometry) and metric-guided spatio-temporal refinement to yield the final ground truth $\mathbf{E}_{\mathrm{gt}}$. While this protocol is designed for controlled validation and does not cover scenarios involving camera or scene motion, we complement it with DSEC-Flare—a large-scale collection of unpaired real-world flare examples mined from public datasets. Though lacking ground-truth alignment, DSEC-Flare provides diverse and challenging flare patterns that allow qualitative assessment of generalization beyond controlled settings, thus serving as a complementary benchmark to our paired test set.
 
 
-With the data generation pipeline complete, we proceed to train our restoration network. Event streams are converted into voxel grids $\mathcal{V}(\cdot)$~\cite{duan2021eventzoom}. We train a 3D U-Net~\cite{cciccek20163d} in a residual manner; by keeping the network standard, performance gains are cleanly attributed to our data pipeline rather than architectural novelty. \textbf{E-DeflareNet} predicts a residual approximating the negative flare component. The final restored voxel grid is computed as $\hat{\mathcal{V}}_{\mathrm{gt}} = \mathcal{V}(\mathbf{E}_{\mathrm{ob}}) + f_{\theta}(\mathcal{V}(\mathbf{E}_{\mathrm{ob}}))$. The parameters $\theta$ are optimized via Mean Squared Error (MSE) loss between the restored and ground-truth voxel grids:
+We then train E-DeflareNet to validate our data pipeline and theoretical analysis. Event streams are converted to voxel grids $\mathcal{V}(\cdot)$~\cite{duan2021eventzoom}. Using a standard 3D U-Net~\cite{cciccek20163d} with residual prediction, we optimize:
 \begin{equation}
 \theta^* = \underset{\theta}{\arg\min} \left\| \mathcal{V}(\mathbf{E}_{\mathrm{ob}}) + f_{\theta}(\mathcal{V}(\mathbf{E}_{\mathrm{ob}})) - \mathcal{V}(\mathbf{E}_{\mathrm{gt}}) \right\|_2^2.
 \end{equation}
-Due to space limitations, further details have been provided in the \textbf{Appendix}.
+The restored voxel grid is $\hat{\mathcal{V}}_{\mathrm{gt}} = \mathcal{V}(\mathbf{E}_{\mathrm{ob}}) + f_{\theta}(\mathcal{V}(\mathbf{E}_{\mathrm{ob}}))$. 
+% Details are in the \textbf{Appendix}.
 
 
 \subsection{Datasets \& Benchmark}
 The \emph{\ours}~benchmark comprises three complementary datasets, each serving a distinct role:
 \begin{itemize}
-    \item \textbf{\underline{E-Flare2.7K}:} A large-scale \emph{simulated} dataset for training and controlled quantitative testing, with $2.7$K samples ($2{,}545$ training, $175$ testing). Light-source positions and flare patterns are randomized; see the \textbf{Appendix} for examples.
+    \item \textbf{\underline{E-Flare2.7K}:} A large-scale \emph{simulated} dataset for training and quantitative testing, with $2.7$K samples ($2{,}545$ training, $175$ testing). Light-source positions and flare patterns are randomized; see the \textbf{Appendix} for examples.
 
     \item \textbf{\underline{E-Flare-R}:} A paired \emph{real-world} test set for high-fidelity validation under controlled acquisition, providing $150$ samples with optical artifacts such as surface glare and internal reflections~\cite{shi2023identifying}.
 
-    \item \textbf{\underline{DSEC-Flare}:} Curated sequences from the public DSEC dataset~\cite{gehrig2021dsec} exhibiting natural flare corruption in driving scenarios, used for qualitative real-world evaluation where paired ground truth is unavailable.
+    \item \textbf{\underline{DSEC-Flare}:} Curated sequences from the public DSEC dataset~\cite{gehrig2021dsec} exhibiting natural flare corruption in driving scenarios, used for qualitative real-world evaluation where paired ground truth is not needed.
 \end{itemize}
 
 \iffalse
@@ -189,4 +190,4 @@ The \emph{\ours}~benchmark comprises three complementary datasets, each serving 
     \vspace{-0.2cm}
 \end{table}
 \fi
-Together, these datasets cover large-scale learning, paired real-world evaluation, and qualitative evidence in natural driving scenes, which cannot be obtained from a single acquisition source. Some representative data samples are in \cref{fig:2x2}. Further details and data examples are provided in the \textbf{Appendix}.
+Together, these datasets cover large-scale learning, paired real-world evaluation, and qualitative evidence in natural driving scenes, which cannot be obtained from a single acquisition source. Some representative data samples are in \cref{fig:2x2}. Further details are provided in the \textbf{Appendix}.

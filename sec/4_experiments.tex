@@ -1,6 +1,6 @@
 \section{Experiments}
 \label{sec:experiments}
-This section presents quantitative \& qualitative experiments on event de-flaring.
+% This section presents quantitative \& qualitative experiments on event de-flaring.
 
 \begin{table*}[!tbp]
     \centering
@@ -40,7 +40,7 @@ Our proposed model is trained exclusively on \emph{E-Flare2.7K-train}, and teste
 
 
 \noindent\textbf{Baselines.}
-No event de-flaring method currently exists. Image-based flare removal methods~\cite{wu2021train,dai2022flare7k,dai2024flare7k++,zhou2023improving} operate on dense frames and are not directly applicable to event streams. We therefore compare with the closest available event artifact filters and controls: \emph{RAW Input}; \emph{Voxel Transform}, a round-trip codec baseline without learned processing; \emph{EFR}~\cite{wang2022linear}, a flicker-removal filter; and \emph{PFD-A}/\emph{PFD-B}~\cite{shi2024polarity}, two denoising and light-interference filters. EFR and PFD are rule based and cannot be trained on \emph{E-Flare2.7K}, so they are evaluated using their original procedures. More details are provided in the \textbf{Appendix}.
+No event de-flaring method currently exists. Image-based flare removal methods~\cite{wu2021train,dai2022flare7k,dai2024flare7k++,zhou2023improving} operate on dense frames and are not directly applicable to event streams. We therefore compare with the closest available event artifact filters and controls: \emph{RAW Input}; \emph{Voxel Transform}, a round-trip codec baseline without learned processing; \emph{EFR}~\cite{wang2022linear}, a flicker-removal filter; and \emph{PFD-A}/\emph{PFD-B}~\cite{shi2024polarity}, two denoising and light-interference filters. EFR and PFD are rule based and cannot be trained.
 
 
 \noindent\textbf{Evaluation Protocol.} 
@@ -49,7 +49,7 @@ For \textbf{event-level} fidelity, inspired by PECS~\cite{han2024physical}, we d
 
 
 \noindent\textbf{Implementation Details.} 
-Our model is trained on \textbf{E-Flare2.7K} for $40$k iterations on a single NVIDIA RTX $3090$ GPU. The network employs a standard residual 3D U-Net, demonstrating that our physically grounded data alone suffice for effective learning. Due to space limitations, more implementation details have been provided in the \textbf{Appendix}.
+Our model is trained on \textbf{E-Flare2.7K} for $40$k iterations on a single NVIDIA RTX $3090$ GPU. The network employs a standard residual 3D U-Net, demonstrating that our physically grounded data alone suffice for effective learning. more details of experimental settings are provided in the \textbf{Appendix}.
 
 
 
@@ -131,7 +131,7 @@ Figs.~\ref{fig:qualitative_sim}--\ref{fig:qualitative_real} further confirm thes
 We ablate three design variants on E-Flare-R (Table~\ref{tab:ablation_main}):
 \textbf{(1)} \emph{No Light}: ground truth incorrectly removes the light source, treating de-flaring as complete elimination;
 \textbf{(2)} \emph{Simple}: direct additive fusion, ignoring irradiance superposition physics;
-\textbf{(3)} \emph{Full Model (Ours)}: physics-guided synthesis with probabilistic non-linear event suppression (PNL-ES) as described above.
+\textbf{(3)} \emph{Full Model (Ours)}: full physics-guided synthesis  as described above.
 % \textbf{(4)} \emph{Full Model + Jitter}: our method with additional temporal jitter augmentation to test whether gains stem from physical modeling or stochastic augmentation.
 
 The results reveal a clear performance hierarchy.
@@ -139,7 +139,7 @@ First, the catastrophic failure of \emph{No Light} (Chamfer: $1.9745$ \vs $1.136
 Second, the substantial gap between \emph{Simple} and our \emph{Full Model} (Chamfer: $1.3434$ \vs $1.1368$, a $15.4\%$ improvement) validates the necessity of \textbf{physics-guided event fusion}. The simple additive approach implicitly sets $w_{\mathrm{bg}} = 1$ regardless of relative irradiance, ignoring the physical weighting derived in Sec.~\ref{ssec:forward_model}. This is especially damaging in flare-dominated regions where $w_{\mathrm{bg}} \to 0$: it erroneously preserves all background events that the real sensor would suppress, training the network on physically implausible data.
 % Third, and crucially, the performance drop in \emph{Full Model + Jitter} (Chamfer: $1.6811$ \vs $1.1368$, a $47.9\%$ degradation) demonstrates that \textbf{our gains arise from physical insight, not data augmentation}. The temporal jitter severs the strict spatio-temporal correspondence between each event and its physical weight $w_{\mathrm{bg}}(t)$, which is precisely what PNL-ES's probabilistic approximation relies on. This confirms that our method implements a rigorous physical approximation rather than random dropout.
 
-Collectively, these ablations confirm that the success of \textbf{E-Deflare} arises from principled physical modeling: (1) maintaining correct light source semantics in training targets, and (2) implementing the non-linear event suppression mechanism derived from the irradiance-domain interaction model.
+These ablations confirm that the success of \textbf{E-Deflare} arises from principled physical modeling: (1) maintaining correct light source semantics in training targets, and (2) implementing the non-linear event suppression mechanism derived from the irradiance-domain interaction model.
 
 
 \begin{table*}[!tbp]
