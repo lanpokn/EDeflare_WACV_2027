@@ -49,7 +49,7 @@ For \textbf{event-level} fidelity, inspired by PECS~\cite{han2024physical}, we d
 
 
 \noindent\textbf{Implementation Details.} 
-Our model is trained on \textbf{E-Flare2.7K} for $40$k iterations on a single NVIDIA RTX $3090$ GPU. The network employs a standard residual 3D U-Net, demonstrating that our physically grounded data alone suffice for effective learning. more details of experimental settings are provided in the \textbf{Appendix}.
+We train on \textbf{E-Flare2.7K} for $40$k iterations on one RTX 3090. The standard residual 3D U-Net shows that physically grounded data alone suffice for effective learning. Details are in the \textbf{Appendix}.
 
 
 
@@ -121,7 +121,7 @@ Our model, trained \emph{solely} on simulated data, generalizes zero-shot to rea
 
 
 \noindent\textbf{Qualitative Analysis.}
-Figs.~\ref{fig:qualitative_sim}--\ref{fig:qualitative_real} further confirm these findings. Baselines tend to leave substantial flare artifacts or excessively suppress light sources, compromising scene integrity. In contrast, \textbf{E-DeflareNet} cleanly removes structured flare while preserving illumination consistent with ground truth, recovering physically plausible event streams with high spatial and temporal fidelity.
+Figs.~\ref{fig:qualitative_sim}--\ref{fig:qualitative_real} confirm this trend: baselines leave flare artifacts or over-suppress light sources, while \textbf{E-DeflareNet} removes structured flare and preserves valid events.
 
 
 
@@ -160,17 +160,15 @@ Figs.~\ref{fig:qualitative_sim}--\ref{fig:qualitative_real} further confirm thes
 \end{table*}
 
 We ablate three design variants on E-Flare-R (Table~\ref{tab:ablation_main}):
-\textbf{(1)} \emph{No Light}: ground truth incorrectly removes the light source, treating de-flaring as complete elimination;
-\textbf{(2)} \emph{Simple}: direct additive fusion, ignoring irradiance superposition physics;
-\textbf{(3)} \emph{Full Model (Ours)}: full physics-guided synthesis  as described above.
+\textbf{(1)} \emph{No Light}: the target removes the light source;
+\textbf{(2)} \emph{Simple}: direct additive fusion;
+\textbf{(3)} \emph{Full Model (Ours)}: full physics-guided synthesis.
 % \textbf{(4)} \emph{Full Model + Jitter}: our method with additional temporal jitter augmentation to test whether gains stem from physical modeling or stochastic augmentation.
 
-The results reveal a clear performance hierarchy.
-First, the catastrophic failure of \emph{No Light} (Chamfer: $1.9745$ \vs $1.1368$ for ours) confirms that \textbf{preserving the actual light source in ground truth is essential}. This variant treats all flare-related events as noise to be removed, destroying semantically valid illumination.
-Second, the substantial gap between \emph{Simple} and our \emph{Full Model} (Chamfer: $1.3434$ \vs $1.1368$, a $15.4\%$ improvement) validates the necessity of \textbf{physics-guided event fusion}. The simple additive approach implicitly sets $w_{\mathrm{bg}} = 1$ regardless of relative irradiance, ignoring the physical weighting derived in Sec.~\ref{ssec:forward_model}. This is especially damaging in flare-dominated regions where $w_{\mathrm{bg}} \to 0$: it erroneously preserves all background events that the real sensor would suppress, training the network on physically implausible data.
+The \emph{No Light} failure (Chamfer: $1.9745$ \vs $1.1368$ for ours) shows that ground truth must preserve the actual light source rather than treat all flare-related events as noise. The gap between \emph{Simple} and \emph{Full Model} (Chamfer: $1.3434$ \vs $1.1368$) shows that additive fusion ignores the physical weighting in Sec.~\ref{ssec:forward_model}, especially in flare-dominated regions where $w_{\mathrm{bg}} \to 0$.
 % Third, and crucially, the performance drop in \emph{Full Model + Jitter} (Chamfer: $1.6811$ \vs $1.1368$, a $47.9\%$ degradation) demonstrates that \textbf{our gains arise from physical insight, not data augmentation}. The temporal jitter severs the strict spatio-temporal correspondence between each event and its physical weight $w_{\mathrm{bg}}(t)$, which is precisely what PNL-ES's probabilistic approximation relies on. This confirms that our method implements a rigorous physical approximation rather than random dropout.
 
-These ablations confirm that the success of \textbf{E-Deflare} arises from principled physical modeling: (1) maintaining correct light source semantics in training targets, and (2) implementing the non-linear event suppression mechanism derived from the irradiance-domain interaction model.
+These ablations confirm the need to preserve light-source semantics and model non-linear event suppression.
 
 
 \subsection{Downstream Task Evaluations}
