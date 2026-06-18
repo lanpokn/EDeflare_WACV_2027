@@ -130,6 +130,8 @@ Our model, trained \emph{solely} on simulated data, generalizes zero-shot to rea
 Figs.~\ref{fig:qualitative_sim}--\ref{fig:qualitative_real} further confirm these findings. Baselines tend to leave substantial flare artifacts or excessively suppress light sources, compromising scene integrity. In contrast, \textbf{E-DeflareNet} cleanly removes structured flare while preserving illumination consistent with ground truth, recovering physically plausible event streams with high spatial and temporal fidelity.
 
 
+\FloatBarrier
+
 
 
 \subsection{Ablation Study}
@@ -146,16 +148,6 @@ First, the catastrophic failure of \emph{No Light} (Chamfer: $1.9745$ \vs $1.136
 Second, the substantial gap between \emph{Simple} and our \emph{Full Model} (Chamfer: $1.3434$ \vs $1.1368$, a $15.4\%$ improvement) validates the necessity of \textbf{physics-guided event fusion}. The simple additive approach implicitly sets $w_{\mathrm{bg}} = 1$ regardless of relative irradiance, ignoring the physical weighting derived in Sec.~\ref{ssec:forward_model}. This is especially damaging in flare-dominated regions where $w_{\mathrm{bg}} \to 0$: it erroneously preserves all background events that the real sensor would suppress, training the network on physically implausible data.
 % Third, and crucially, the performance drop in \emph{Full Model + Jitter} (Chamfer: $1.6811$ \vs $1.1368$, a $47.9\%$ degradation) demonstrates that \textbf{our gains arise from physical insight, not data augmentation}. The temporal jitter severs the strict spatio-temporal correspondence between each event and its physical weight $w_{\mathrm{bg}}(t)$, which is precisely what PNL-ES's probabilistic approximation relies on. This confirms that our method implements a rigorous physical approximation rather than random dropout.
 
-
-
-\begin{figure}[t]
-    \centering
-    \includegraphics[width=\columnwidth]{figures/image_reconstruction.pdf}
-    \vspace{-0.65cm}
-    \caption{\textbf{Downstream task comparisons} for event-based imaging. We use SPADE-E2VID~\cite{cadena2021spade} to reconstruct images from both raw and our de-flared event streams on a challenging DSEC scene.}
-    \label{fig:image_reconstruction}
-    \vspace{-0.1cm}
-\end{figure}
 Collectively, these ablations confirm that the success of \textbf{E-Deflare} arises from principled physical modeling: (1) maintaining correct light source semantics in training targets, and (2) implementing the non-linear event suppression mechanism derived from the irradiance-domain interaction model.
 
 
@@ -191,12 +183,38 @@ Collectively, these ablations confirm that the success of \textbf{E-Deflare} ari
 \end{table*}
 
 
+\FloatBarrier
+
 
 \subsection{Downstream Task Evaluations}
 \label{sec:downstream}
 
 To validate the generalizability of our framework, we evaluate \textbf{E-Deflare} on two high-level tasks: image reconstruction and 3D scene reconstruction.
 
+\noindent\textbf{Event-based Imaging.}
+We first assess the impact of de-flaring on event-to-image reconstruction using the state-of-the-art SPADE-E2VID framework~\cite{cadena2021spade}. Fig.~\ref{fig:image_reconstruction} shows results on challenging sequences in \textbf{DSEC-Flare}. Images reconstructed from raw, flare-corrupted events exhibit strong flare patterns, obscuring fine scene details. In contrast, images reconstructed from our de-flared events recover cleaner and accurate illumination, revealing significant visual improvement. These results demonstrate that \textbf{E-Deflare} serves as an effective pre-processing step, substantially enhancing the clarity and usability of event data for imaging applications.
+
+\begin{figure}[t]
+    \centering
+    \includegraphics[width=\columnwidth]{figures/image_reconstruction.pdf}
+    \vspace{-0.65cm}
+    \caption{\textbf{Downstream task comparisons} for event-based imaging. We use SPADE-E2VID~\cite{cadena2021spade} to reconstruct images from both raw and our de-flared event streams on a challenging DSEC scene.}
+    \label{fig:image_reconstruction}
+    \vspace{-0.1cm}
+\end{figure}
+
+
+
+
+% \noindent\textbf{Event-based 3D Reconstruction.}
+% To demonstrate the practical impact of our method, we conduct a rigorous quantitative evaluation on the downstream task of event-based 3D reconstruction. As no standard benchmark with flare artifacts exists for this task, we created one by synthesizing paired event datasets using the popular LEGO scene from the NeRF-synthetic \cite{mildenhall2021nerf} dataset, following the simulation methodology of PECS \cite{han2024physical}.
+
+% Using the method from Event3DGS~\cite{han2024event}, we reconstruct a 3D scene from the original flare-corrupted input, our de-flared output, and the outputs from baseline methods. We then evaluate the quality of each reconstruction by rendering novel views and comparing them against the pristine ground truth. To ensure fairness, the background is color-normalized during metric calculation.
+
+% The results in Table~\ref{tab:3dgs_quant} reveal that naive de-flaring can be detrimental. Most baselines fail to improve reconstruction, with some even degrading performance below the original input. In stark contrast, our method is the only one to provide a clear and consistent improvement, boosting the SSIM from $0.765$ to a state-of-the-art $\mathbf{0.792}$ where all others falter. This powerfully demonstrates that our approach provides a cleaner, more reliable input that directly benefits downstream 3D perception.
+
+\noindent\textbf{Event-based 3D Reconstruction.}
+To demonstrate the practical impact of our method, we conduct a rigorous quantitative evaluation on event-based 3D reconstruction. As no standard benchmark with flare artifacts exists for this task, we synthesized a paired event dataset from the popular LEGO scene of NeRF-synthetic~\cite{mildenhall2021nerf}, following the simulation methodology of PECS~\cite{han2024physical}. The experimental process involves reconstructing a 3D scene from various event streams (the original flare-corrupted input, our de-flared output, and outputs from baseline methods) using Event3DGS~\cite{han2024event}. We then evaluate the reconstruction by rendering novel views and comparing them against the pristine ground truth, with background color normalization for a fair comparison.
 
 \begin{table}[t]
     \centering
@@ -217,21 +235,6 @@ To validate the generalizability of our framework, we evaluate \textbf{E-Deflare
     \end{tabular}}
     \vspace{-0.1cm}
 \end{table}
-\noindent\textbf{Event-based Imaging.}
-We first assess the impact of de-flaring on event-to-image reconstruction using the state-of-the-art SPADE-E2VID framework~\cite{cadena2021spade}. Fig.~\ref{fig:image_reconstruction} shows results on challenging sequences in \textbf{DSEC-Flare}. Images reconstructed from raw, flare-corrupted events exhibit strong flare patterns, obscuring fine scene details. In contrast, images reconstructed from our de-flared events recover cleaner and accurate illumination, revealing significant visual improvement. These results demonstrate that \textbf{E-Deflare} serves as an effective pre-processing step, substantially enhancing the clarity and usability of event data for imaging applications.
-
-
-
-
-% \noindent\textbf{Event-based 3D Reconstruction.}
-% To demonstrate the practical impact of our method, we conduct a rigorous quantitative evaluation on the downstream task of event-based 3D reconstruction. As no standard benchmark with flare artifacts exists for this task, we created one by synthesizing paired event datasets using the popular LEGO scene from the NeRF-synthetic \cite{mildenhall2021nerf} dataset, following the simulation methodology of PECS \cite{han2024physical}.
-
-% Using the method from Event3DGS~\cite{han2024event}, we reconstruct a 3D scene from the original flare-corrupted input, our de-flared output, and the outputs from baseline methods. We then evaluate the quality of each reconstruction by rendering novel views and comparing them against the pristine ground truth. To ensure fairness, the background is color-normalized during metric calculation.
-
-% The results in Table~\ref{tab:3dgs_quant} reveal that naive de-flaring can be detrimental. Most baselines fail to improve reconstruction, with some even degrading performance below the original input. In stark contrast, our method is the only one to provide a clear and consistent improvement, boosting the SSIM from $0.765$ to a state-of-the-art $\mathbf{0.792}$ where all others falter. This powerfully demonstrates that our approach provides a cleaner, more reliable input that directly benefits downstream 3D perception.
-
-\noindent\textbf{Event-based 3D Reconstruction.}
-To demonstrate the practical impact of our method, we conduct a rigorous quantitative evaluation on event-based 3D reconstruction. As no standard benchmark with flare artifacts exists for this task, we synthesized a paired event dataset from the popular LEGO scene of NeRF-synthetic~\cite{mildenhall2021nerf}, following the simulation methodology of PECS~\cite{han2024physical}. The experimental process involves reconstructing a 3D scene from various event streams (the original flare-corrupted input, our de-flared output, and outputs from baseline methods) using Event3DGS~\cite{han2024event}. We then evaluate the reconstruction by rendering novel views and comparing them against the pristine ground truth, with background color normalization for a fair comparison.
 
 
 
@@ -244,6 +247,8 @@ To demonstrate the practical impact of our method, we conduct a rigorous quantit
     \vspace{-0.1cm}
 \end{figure}
 The results in Table~\ref{tab:3dgs_quant} reveal that naive de-flaring can be detrimental. Most baselines fail to improve reconstruction, with some even degrading performance below the original input. In contrast, our method is the only one providing a clear and consistent improvement, boosting the SSIM from $0.765$ to a state-of-the-art $\mathbf{0.792}$. This powerfully demonstrates that our approach provides a cleaner, more reliable input that directly and substantially benefits downstream 3D perception tasks.
+
+\FloatBarrier
 
 
 %old version, the bg have different color

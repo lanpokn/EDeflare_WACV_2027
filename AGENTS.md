@@ -2,6 +2,8 @@
 
 This directory is the WACV 2027 target package for the E-Deflare paper.
 
+The local WACV requirement reference is `原始要求.txt` in this directory (Windows path: `E:\BaiduSyncdisk\2025\event_flick_flare\论文写作\ECCV2026\wacv-2027-author-kit-template\原始要求.txt`). It states that papers, excluding references, must be no longer than eight pages.
+
 Source priority:
 
 1. Paper content, claims, equations, datasets, results, citations, and supplementary text come from `../EDeflare_ECCV_2026/`.

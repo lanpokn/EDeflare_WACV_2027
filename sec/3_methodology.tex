@@ -72,7 +72,13 @@ This reveals that although intensities superpose linearly, their logarithmic der
 
 \textbf{Complete Forward Model.} Substituting the dual representation (\ie, Eq.~\ref{eq:continuous_link}) for each component into Eq.~\ref{eq:log_derivative_mixing}, we obtain the full mixing equation:
 \begin{equation}
-    \frac{dL_{\mathrm{ob}}(t)}{dt} = w_{\mathrm{bg}}(t) \left[ c \mathbf{E}_{\mathrm{bg}}(t) + \xi_{\mathrm{bg}}(t) \right] + w_{\textcolor{ev_red}{\mathrm{\mathbf{f}}}}(t) \left[ c \mathbf{E}_{\textcolor{ev_red}{\mathrm{\mathbf{f}}}}(t) + \xi_{\textcolor{ev_red}{\mathrm{\mathbf{f}}}}(t) \right]~,
+    \begin{aligned}
+    \frac{dL_{\mathrm{ob}}(t)}{dt} ={}&
+    w_{\mathrm{bg}}(t) \left[ c \mathbf{E}_{\mathrm{bg}}(t) + \xi_{\mathrm{bg}}(t) \right] \\
+    &+ w_{\textcolor{ev_red}{\mathrm{\mathbf{f}}}}(t)
+    \left[ c \mathbf{E}_{\textcolor{ev_red}{\mathrm{\mathbf{f}}}}(t)
+    + \xi_{\textcolor{ev_red}{\mathrm{\mathbf{f}}}}(t) \right]~,
+    \end{aligned}
     \label{eq:full_mixing_derivative}
 \end{equation}
 where $\xi_{\mathrm{bg}}(t)$ and $\xi_{\textcolor{ev_red}{\mathrm{\mathbf{f}}}}(t)$ denote the respective residual rates. Integrating Eq.~\ref{eq:full_mixing_derivative} over time and substituting back into the sensor model (Eq.~\ref{eq:sensor_model_integral_redef}) yields the complete forward model:
@@ -82,10 +88,16 @@ where $\xi_{\mathrm{bg}}(t)$ and $\xi_{\textcolor{ev_red}{\mathrm{\mathbf{f}}}}(
 \end{equation}
 where the integrand $\Phi(\tau)$ represents the mixed log-rate potential:
 \begin{equation}
-    \Phi(\tau) = \underbrace{w_{\mathrm{bg}}(\tau)\, c \mathbf{E}_{\mathrm{bg}}(\tau) + w_{\textcolor{ev_red}{\mathrm{\mathbf{f}}}}(\tau)\, c \mathbf{E}_{\textcolor{ev_red}{\mathrm{\mathbf{f}}}}(\tau)}_{\text{Weighted Impulse Terms}} + \underbrace{w_{\mathrm{bg}}(\tau)\,\xi_{\mathrm{bg}}(\tau) + w_{\textcolor{ev_red}{\mathrm{\mathbf{f}}}}(\tau)\,\xi_{\textcolor{ev_red}{\mathrm{\mathbf{f}}}}(\tau)}_{\text{Mixed Residuals } \xi_{\mathrm{mix}}}~.
+    \begin{aligned}
+    \Phi(\tau) ={}&
+    w_{\mathrm{bg}}(\tau)\, c \mathbf{E}_{\mathrm{bg}}(\tau)
+    + w_{\textcolor{ev_red}{\mathrm{\mathbf{f}}}}(\tau)\, c \mathbf{E}_{\textcolor{ev_red}{\mathrm{\mathbf{f}}}}(\tau) \\
+    &+ w_{\mathrm{bg}}(\tau)\,\xi_{\mathrm{bg}}(\tau)
+    + w_{\textcolor{ev_red}{\mathrm{\mathbf{f}}}}(\tau)\,\xi_{\textcolor{ev_red}{\mathrm{\mathbf{f}}}}(\tau)~.
+    \end{aligned}
     \label{eq:integrand_phi}
 \end{equation}
-This formulation is physically complete: the outer operator $\mathcal{S}_{\mathrm{evt}}$ ensures the output is a discrete event stream (Eq.~\ref{eq:event_stream_definition}), while the integral captures the accumulated log-intensity change, explaining why flare-dominated regions exhibit slower accumulation, and thus suppressed background events.
+The first line contains the weighted impulse terms, and the second line contains the mixed residuals $\xi_{\mathrm{mix}}$. This formulation is physically complete: the outer operator $\mathcal{S}_{\mathrm{evt}}$ ensures the output is a discrete event stream (Eq.~\ref{eq:event_stream_definition}), while the integral captures the accumulated log-intensity change, explaining why flare-dominated regions exhibit slower accumulation, and thus suppressed background events.
 
 
 \textbf{Practical Considerations.} Were the continuous irradiance profiles $\mathbf{I}_{\mathrm{bg}}(t)$ and $\mathbf{I}_{\textcolor{ev_red}{\mathrm{\mathbf{f}}}}(t)$ known, one could precisely compute $w(t)$ and $\xi_{\mathrm{mix}}$, then evaluate $\mathcal{S}_{\mathrm{evt}}$ exactly. In practice, when synthesizing paired training data, we possess only pre-recorded discrete event streams; the underlying continuous irradiance $\mathbf{I}(t)$ is unavailable. Without $\mathbf{I}(t)$, neither the weights $w_{\mathrm{bg}}(t), w_{\textcolor{ev_red}{\mathrm{\mathbf{f}}}}(t)$ nor the residual terms $\xi_{\mathrm{bg}}(t), \xi_{\textcolor{ev_red}{\mathrm{\mathbf{f}}}}(t)$ can be computed, making exact integration intractable. This necessitates a principled discrete approximation that faithfully respects the physical weighting mechanism, which we develop in Sec.~\ref{ssec:simulator}.
