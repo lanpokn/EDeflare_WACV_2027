@@ -45,7 +45,7 @@ No event de-flaring method currently exists. Image-based flare removal methods~\
 
 \noindent\textbf{Evaluation Protocol.} 
 As no established metrics exist for this task, we adapt measures from related event-based studies.  
-For \textbf{event-level} fidelity, inspired by PECS~\cite{han2024physical}, we design two metrics: the \emph{Chamfer Distance} ($\downarrow$), the average nearest-neighbor distance to ground-truth events; and the \emph{Gaussian Distance} ($\downarrow$), applying Gaussian weighting to suppress outliers. For \textbf{voxel-level} structural quality, we adopt the standard evaluation suite from V2CE~\cite{zhang2023v2ce}, including \emph{Mean Squared Error} (MSE, $\downarrow$), \emph{Pooled MSE} (PMSE, $\downarrow$), and \emph{Binarized-Grid F1} scores (R-F1, T-F1, TP-F1, all $\uparrow$) to jointly and comprehensively capture reconstruction accuracy and overall precision-recall balance.
+For \textbf{event-level} fidelity, inspired by PECS~\cite{han2024physical}, we design two metrics: the \emph{Chamfer Distance} ($\downarrow$), the average nearest-neighbor distance to ground-truth events; and the \emph{Gaussian Distance} ($\downarrow$), applying Gaussian weighting to suppress outliers. For \textbf{voxel-level} structural quality, we adopt the standard evaluation suite from V2CE~\cite{zhang2023v2ce}, including \emph{Mean Squared Error} (MSE, $\downarrow$), \emph{Pooled MSE} (PMSE, $\downarrow$), and \emph{Binarized-Grid F1} scores (R-F1, T-F1, TP-F1, all $\uparrow$) to capture reconstruction accuracy and precision-recall balance.
 
 
 \noindent\textbf{Implementation Details.} 
@@ -105,7 +105,7 @@ Our model, trained \emph{solely} on simulated data, generalizes zero-shot to rea
     \bottomrule
     \end{tabular}}
     \vspace{-0.15cm}
-    \caption{\textbf{Quantitative comparisons on the E-Flare-R dataset}. We evaluate against five event-based de-flaring baselines using event-level and voxel-level metrics. Cell backgrounds highlight the \colorbox{gray!20}{raw baseline}, \colorbox{ev_red!20}{second-best}, and \colorbox{ev_blue!20}{best} value per metric. The final row shows the percentage improvement of our method over the second-best ($\downarrow$: lower is better, $\uparrow$: higher is better). Ch. = Chamfer Distance; Gau. = Gaussian Distance; PM2/PM4 = Pooled MSE at scales 2/4.}
+    \caption{\textbf{Quantitative comparisons on the E-Flare-R dataset}. Baselines, metrics, color coding and the improvement row follow Table~\ref{tab:main_sim_quant}.}
     \label{tab:main_real_quant}
     \vspace{-0.3cm}
 \end{table*}
@@ -114,7 +114,7 @@ Our model, trained \emph{solely} on simulated data, generalizes zero-shot to rea
     \centering
     \includegraphics[width=\textwidth]{figures/real_R.pdf}
     \vspace{-0.6cm}
-    \caption{\textbf{Qualitative assessments on E-Flare-R.} Each column shows the output of a different method applied to the same flare-corrupted input. The rightmost column displays the ground truth for reference. Best viewed in color and zoomed-in for details.}
+    \caption{\textbf{Qualitative assessments on E-Flare-R.} Layout as in Fig.~\ref{fig:qualitative_sim}.}
     \label{fig:qualitative_real}
     \vspace{-0.2cm}
 \end{figure*}
@@ -154,7 +154,7 @@ Figs.~\ref{fig:qualitative_sim}--\ref{fig:qualitative_real} confirm this trend: 
     \end{tabular}%
     }%
     \vspace{-0.15cm}
-    \caption{\textbf{Ablation study on the E-Flare-R dataset}. We evaluate three variants to analyze our core design choices. The final row shows the improvement of our full model over the best ablated variant ($\downarrow$: lower is better, $\uparrow$: higher is better). Ch. = Chamfer Distance; Gau. = Gaussian Distance; PM2/PM4 = Pooled MSE at scales 2/4.}
+    \caption{\textbf{Ablation study on the E-Flare-R dataset}. We evaluate three variants to analyze our core design choices. The final row shows the improvement of our full model over the best ablated variant. Metric abbreviations follow Table~\ref{tab:main_sim_quant}.}
     \label{tab:ablation_main}
 \vspace{-0.2cm}
 \end{table*}
