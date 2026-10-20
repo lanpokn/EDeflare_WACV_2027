@@ -34,7 +34,7 @@ A deterministic script-based synchronization strategy ensures perfect spatio-tem
     \item \textbf{Motion Profiles:} Smooth linear trajectories with random start positions, directions ($0$--$360$°), and travel distances (up to $180$ pixels).
     \item \textbf{Geometric Augmentations:} Random rotations ($0$--$360$°), scaling ($0.8$--$1.5\times$), translations ($\pm20$\%), and shearing ($\pm20$°).
     \item \textbf{Intensity Flicker:} Periodic flickering at $100$--$140$~Hz with varied waveforms (sine, square, triangle); stable (non-flickering) sources simulated in $30\%$ of samples.
-    \item \textbf{Hybrid Flare Rendering:} Scattering flare animated from Flare7K++ assets; reflective flare (ghosts moving opposite to the light source and changing shape at large off-axis angles) synthesized via a custom real-time shader pipeline applied in $90\%$ of sequences (to be released with code).
+    \item \textbf{Hybrid Flare Rendering:} Scattering flare animated from Flare7K++ assets; reflective flare (ghosts moving opposite to the light source and changing shape at large off-axis angles) synthesized via a custom real-time shader pipeline applied in $90\%$ of sequences (released with our code).
     \item \textbf{Event Generation:} Videos rendered at up to $6{,}000$~FPS and converted to event streams via DVS-Voltmeter~\cite{lin2022dvs} with randomized contrast thresholds.
 \end{itemize}
 The resulting dataset contains $\mathbf{2{,}720}$ paired $20$~ms samples at $640 \times 480$, split into $\mathbf{2{,}545}$ for training and $\mathbf{175}$ for testing. Representative samples are shown in Fig.~\ref{APfig:dataset_eflare}.
@@ -463,7 +463,7 @@ The results show that naive de-flaring can harm 3D reconstruction, while our de-
 
 \subsection{Video Demonstrations}
 
-Since event data is inherently temporal, static images cannot fully convey the dynamic quality of the restoration. We provide three video demonstrations attached to the supplementary material: \texttt{demo1.mp4} (E-Flare2.7K), \texttt{demo2.mp4} (E-Flare-R), and \texttt{demo3.mp4} (DSEC-Flare).
+Since event data is inherently temporal, static images cannot fully convey the dynamic quality of the restoration. We provide three video demonstrations on our project page (\url{https://e-flare.github.io}): Demo~\#1 (E-Flare2.7K), Demo~\#2 (E-Flare-R), and Demo~\#3 (DSEC-Flare).
 
 
 %% ============================================================
