@@ -34,7 +34,7 @@ A deterministic script-based synchronization strategy ensures perfect spatio-tem
     \item \textbf{Motion Profiles:} Smooth linear trajectories with random start positions, directions ($0$--$360$°), and travel distances (up to $180$ pixels).
     \item \textbf{Geometric Augmentations:} Random rotations ($0$--$360$°), scaling ($0.8$--$1.5\times$), translations ($\pm20$\%), and shearing ($\pm20$°).
     \item \textbf{Intensity Flicker:} Periodic flickering at $100$--$140$~Hz with varied waveforms (sine, square, triangle); stable (non-flickering) sources simulated in $30\%$ of samples.
-    \item \textbf{Hybrid Flare Rendering:} Scattering flare animated from Flare7K++ assets; reflective flare synthesized via a custom real-time shader pipeline applied in $90\%$ of sequences (to be released with code).
+    \item \textbf{Hybrid Flare Rendering:} Scattering flare animated from Flare7K++ assets; reflective flare (ghosts moving opposite to the light source and changing shape at large off-axis angles) synthesized via a custom real-time shader pipeline applied in $90\%$ of sequences (to be released with code).
     \item \textbf{Event Generation:} Videos rendered at up to $6{,}000$~FPS and converted to event streams via DVS-Voltmeter~\cite{lin2022dvs} with randomized contrast thresholds.
 \end{itemize}
 The resulting dataset contains $\mathbf{2{,}720}$ paired $20$~ms samples at $640 \times 480$, split into $\mathbf{2{,}545}$ for training and $\mathbf{175}$ for testing. Representative samples are shown in Fig.~\ref{APfig:dataset_eflare}.
@@ -269,7 +269,7 @@ Applying the Mix operator (Algorithm~\ref{APalg:event_mixing}) yields the paired
 \mathbf{E}_{\mathrm{gt}} &= \mathrm{Mix}(\mathbf{E}_{\mathrm{bg}},\, \mathbf{E}_{\mathrm{light}}) \label{APeq:compose_gt}
 \end{align}
 %
-Generating the required data assets follows the pipeline described in Sec.~\ref*{ssec:simulator} of the main paper. The intensity profiles $\mathbf{I}_{\textcolor{ev_red}{\mathrm{\mathbf{f}}}}(t)$ and $\mathbf{I}_{\mathrm{light}}(t)$ for computing retention probabilities are derived from synthetic videos generated from Flare7K++~\cite{dai2024flare7k++} assets; the background profile $\mathbf{I}_{\mathrm{bg}}(t)$ is estimated from the available event data ($\mathbf{E}_{\mathrm{bg}}$) via standard intensity reconstruction from DSEC~\cite{gehrig2021dsec} sequences, providing a relative intensity proxy sufficient for the probabilistic PNL-ES formulation.
+Generating the required data assets follows the pipeline described in Sec.~\ref*{ssec:simulator} of the main paper. The intensity profiles $\mathbf{I}_{\textcolor{ev_red}{\mathrm{\mathbf{f}}}}(t)$ and $\mathbf{I}_{\mathrm{light}}(t)$ for computing retention probabilities are derived from synthetic videos generated from Flare7K++~\cite{dai2024flare7k++} assets; the background profile $\mathbf{I}_{\mathrm{bg}}(t)$ is reconstructed from the background events ($\mathbf{E}_{\mathrm{bg}}$) or taken directly from the DSEC~\cite{gehrig2021dsec} frame camera, which is sufficient for the probabilistic PNL-ES formulation.
 
 \paragraph{Learning to Deflare.}
 With paired data $(\mathbf{E}_{\mathrm{ob}}, \mathbf{E}_{\mathrm{gt}})$, we frame de-flaring as a supervised learning task. Events are encoded into spatio-temporal voxel grids $\mathcal{V}_{\mathrm{ob}}$ and $\mathcal{V}_{\mathrm{gt}}$. We employ a 3D U-Net~\cite{cciccek20163d} in a residual learning formulation:
