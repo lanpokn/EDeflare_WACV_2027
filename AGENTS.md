@@ -1,20 +1,24 @@
-# WACV Migration Instructions
+# WACV 2027 Paper Package
 
-This directory is the WACV 2027 target package for the E-Deflare paper.
+This directory is the WACV 2027 camera-ready LaTeX package for the E-Deflare paper.
 
-The local WACV requirement reference is `原始要求.txt` in this directory (Windows path: `E:\BaiduSyncdisk\2025\event_flick_flare\论文写作\ECCV2026\wacv-2027-author-kit-template\原始要求.txt`). It states that papers, excluding references, must be no longer than eight pages.
+See `../CLAUDE.md` for the camera-ready requirements, deadlines and working rules. This file covers the LaTeX package itself.
 
-The previous-round review/rebuttal notes are in `rebuttal意见.txt` in this directory (Windows path: `E:\BaiduSyncdisk\2025\event_flick_flare\论文写作\ECCV2026\wacv-2027-author-kit-template\rebuttal意见.txt`). Use them as a reviewer-risk checklist when deciding what to keep, clarify, shorten, or move to supplementary material.
+Location: `E:\BaiduSyncdisk\2026\WACV 2027\paper\` (migrated 2026-10-20 from `E:\BaiduSyncdisk\2025\event_flick_flare\论文写作\ECCV2026\wacv-2027-author-kit-template\`).
+
+- `原始要求.txt`: WACV 2027 author-kit guidelines (8-page body limit, references excluded).
+- `../rebuttal.txt`: the WACV 2027 reviews (meta-review + BpRS, T9Tz, qXPa). This is the checklist for camera-ready revisions.
+- `rebuttal意见.txt`: reviews from an earlier venue (Apr–May 2026). History only, not the WACV review.
+- `修改记录.md`: running change log. Append after every substantive edit.
 
 Source priority:
 
-1. Paper content, claims, equations, datasets, results, citations, and supplementary text come from `../EDeflare_ECCV_2026/`.
-2. Figure/table placement may borrow compact CVPR-style decisions from `../CVPR2026_E_Deflare (2)/` when needed for WACV page limits.
-3. Do not reintroduce older CVPR wording when it conflicts with ECCV.
+1. This directory is the content authority for the camera-ready version.
+2. The older ECCV/CVPR drafts under `E:\BaiduSyncdisk\2025\event_flick_flare\论文写作\ECCV2026\` are history only. Do not reintroduce their wording.
 
 WACV package expectations:
 
-- `main.tex` is the main WACV review-paper entry point.
+- `main.tex` is the main-paper entry point (switch from `review` to final mode for camera-ready).
 - `sec/` contains the main-paper sections.
 - `supplementary.tex` is the independent supplementary entry point.
 - `figures/`, `figures_supp/`, and `main.bib` must remain complete enough for Overleaf compilation.
