@@ -41,7 +41,7 @@ The resulting dataset contains $\mathbf{2{,}720}$ paired $20$~ms samples at $640
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.88\textwidth]{figures_supp/dataset_e-flare.pdf}
+    \includegraphics[width=\textwidth]{figures_supp/dataset_e-flare.pdf}
     \caption{\textbf{Examples from E-Flare2.7K.} This large-scale paired dataset combines synthetic event data under \textbf{\textcolor{ev_red}{flare}} (left) and \textbf{\textcolor{ev_green}{normal}} (right) conditions. Best viewed in color and zoomed in for details.}
     \label{APfig:dataset_eflare}
 \end{figure}
@@ -63,7 +63,7 @@ Raw recordings undergo metric-guided temporal alignment (cross-correlation of po
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.88\textwidth]{figures_supp/dataset_e-flare-r.pdf}
+    \includegraphics[width=\textwidth]{figures_supp/dataset_e-flare-r.pdf}
     \caption{\textbf{Examples from E-Flare-R.} This real-world paired dataset combines acquired event data under \textbf{\textcolor{ev_red}{flare}} (left) and \textbf{\textcolor{ev_green}{normal}} (right) conditions. Best viewed in color and zoomed in for details.}
     \label{APfig:dataset_eflarer}
 \end{figure}
@@ -81,7 +81,7 @@ As no paired ground truth is available, DSEC-Flare is used exclusively for quali
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.88\textwidth]{figures_supp/dataset_dsec-flare.pdf}
+    \includegraphics[width=\textwidth]{figures_supp/dataset_dsec-flare.pdf}
     \caption{\textbf{Examples from DSEC-Flare.} Real-world lens flare from vehicle lights and street lamps in driving scenarios. Each example shows the raw event stream alongside a reference RGB frame illustrating the light sources causing the artifacts. Best viewed in color and zoomed in for details.}
     \label{APfig:dataset_dsec}
 \end{figure}
@@ -417,16 +417,18 @@ Figs.~\ref{APfig:supp_1} and~\ref{APfig:supp_2} show scenarios typical of urban 
     \label{APfig:supp_2}
 \end{figure}
 
-\subsection{Generalization to Extreme and Static Cases}
-
-Fig.~\ref{APfig:supp_3} investigates model generalization under stress tests: extreme flare from light sources in close proximity, and \textbf{non-flickering (static) light sources} resembling continuous sunlight or stable DC lighting. Frequency-based baselines (\eg, EFR) rely on detecting temporal periodicity and fail completely on static flare. \textbf{E-DeflareNet}, by contrast, learns to recognize the intrinsic spatio-temporal morphology of flare rather than relying on temporal frequency, and remains stable and effective even in these challenging cases.
-
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{figures_supp/simu_R_supp_3.pdf}
     \caption{\textbf{Extreme and static-flare cases.}}
     \label{APfig:supp_3}
 \end{figure}
+
+
+\subsection{Generalization to Extreme and Static Cases}
+
+Fig.~\ref{APfig:supp_3} investigates model generalization under stress tests: extreme flare from light sources in close proximity, and \textbf{non-flickering (static) light sources} resembling continuous sunlight or stable DC lighting. Frequency-based baselines (\eg, EFR) rely on detecting temporal periodicity and fail completely on static flare. \textbf{E-DeflareNet}, by contrast, learns to recognize the intrinsic spatio-temporal morphology of flare rather than relying on temporal frequency, and remains stable and effective even in these challenging cases.
+
 
 \subsection{Downstream Validation on 3D Reconstruction}
 \label{app:3d_reconstruction}
