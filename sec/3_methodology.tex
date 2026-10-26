@@ -6,13 +6,12 @@ This section introduces \emph{\ours}, a physics-guided approach for removing len
 \begin{figure*}[!t]
     \centering
     \includegraphics[width=\textwidth]{figures/pipeline.pdf}
-    \vspace{-0.5cm}
+    \vspace{-0.59cm}
     \caption{\textbf{Data Generation, Training \& Validation.} 
     In the \emph{\ours}~framework, we introduce two parallel pipelines to address data scarcity. 
     The training pipeline synthesizes paired data by first generating dynamic flare events from static images (\eg, Flare7K++) and then fusing them with real background events (\eg, DSEC) via our physics-guided PNL-ES operator. 
     The testing pipeline captures paired real-world data using a controllable optical setup. A removable filter allows us to record the same dynamic scene \emph{w/} and \emph{w/o} flare, which forms our validation set after post-processing.
     }
-    \vspace{-0.2cm}
     \label{fig:methodology-flowchart}
 \end{figure*}
 
@@ -159,6 +158,39 @@ We then train E-DeflareNet to validate our data pipeline and theoretical analysi
 \end{equation}
 The restored voxel grid is $\hat{\mathcal{V}}_{\mathrm{gt}} = \mathcal{V}(\mathbf{E}_{\mathrm{ob}}) + f_{\theta}(\mathcal{V}(\mathbf{E}_{\mathrm{ob}}))$. 
 % Details are in the \textbf{Appendix}.
+
+
+\begin{table*}[!tbp]
+    \centering
+    \caption{\textbf{Quantitative comparisons on the E-Flare2.7K test set}. We evaluate against five event-based de-flaring baselines using event-level and voxel-level metrics. Cell backgrounds highlight the \colorbox{gray!20}{raw baseline}, \colorbox{ev_red!20}{second-best}, and \colorbox{ev_blue!20}{best} value per metric. The final row shows the percentage improvement of our method over the second-best ($\downarrow$: lower is better, $\uparrow$: higher is better). Ch. = Chamfer Distance; Gau. = Gaussian Distance; PM2/PM4 = Pooled MSE at scales 2/4.}
+    \vspace{-0.3cm}
+    \small
+    \resizebox{\textwidth}{!}{
+    \begin{tabular}{lcccccccc}
+    \toprule
+    \textbf{Method} & ~~~Ch.$\downarrow$~~~ & ~~~Gau.$\downarrow$~~~ & ~~MSE$\downarrow$~~ & ~~PM2$\downarrow$~~ & ~~PM4$\downarrow$~~ & ~~R-F1$\uparrow$~~ & ~~T-F1$\uparrow$~~ & ~~TP-F1$\uparrow$~~
+    \\
+    \midrule
+    \textcolor{gray}{$\bullet$}~\textcolor{gray}{Raw Input} & \cellcolor{gray!20}\textcolor{gray}{$1.3555$} & \cellcolor{gray!20}\textcolor{gray}{$0.5222$} & \cellcolor{gray!20}\textcolor{gray}{$0.8315$} & \cellcolor{gray!20}\textcolor{gray}{$0.3666$} & \cellcolor{gray!20}\textcolor{gray}{$0.3430$} & \cellcolor{gray!20}\textcolor{gray}{$0.5138$} & \cellcolor{gray!20}\textcolor{gray}{$0.6303$} & \cellcolor{gray!20}\textcolor{gray}{$0.6939$}
+    \\
+    \textcolor{ev_red}{$\bullet$}~EFR \cite{wang2022linear} & $1.3237$ & $0.5439$ & $0.5357$ & $0.2019$ & $0.1755$ & $0.1616$ & $0.3572$ & $0.4811$
+    \\
+    \textcolor{ev_red}{$\bullet$}~PFD-A \cite{shi2024polarity} & $1.3958$ & $0.5397$ & $0.8357$ & $0.3637$ & $0.3392$ & $0.4383$ & \cellcolor{ev_red!20}$0.5496$ & $0.6125$
+    \\
+    \textcolor{ev_red}{$\bullet$}~PFD-B \cite{shi2024polarity} & \cellcolor{ev_red!20}$1.2496$ & \cellcolor{ev_red!20}$0.4613$ & \cellcolor{ev_red!20}$0.2851$ & $0.1159$ & $0.1021$ & \cellcolor{ev_red!20}$0.4460$ & $0.5155$ & $0.5727$
+    \\
+    \textcolor{ev_red}{$\bullet$}~Voxel Transform & $1.2923$ & $0.5576$ & $0.3495$ & \cellcolor{ev_red!20}$0.1037$ & \cellcolor{ev_red!20}$0.0829$ & $0.2177$ & $0.5444$ & \cellcolor{ev_red!20}$0.6318$
+    \\
+    \midrule
+    \textcolor{ev_blue}{$\bullet$}~\ours & \cellcolor{ev_blue!20}~$\mathbf{0.4477}$~ & \cellcolor{ev_blue!20}~$\mathbf{0.2646}$~ & \cellcolor{ev_blue!20}~$\mathbf{0.1269}$~ & \cellcolor{ev_blue!20}~$\mathbf{0.0487}$~ & \cellcolor{ev_blue!20}~$\mathbf{0.0435}$~ & \cellcolor{ev_blue!20}~$\mathbf{0.7071}$~ & \cellcolor{ev_blue!20}~$\mathbf{0.7627}$~ & \cellcolor{ev_blue!20}~$\mathbf{0.7794}$~
+    \\
+    \emph{Improvement (\%)} $\uparrow$ & $64.2\%$$\uparrow$ & $42.6\%$$\uparrow$ & $55.5\%$$\uparrow$ & $53.0\%$$\uparrow$ & $47.5\%$$\uparrow$ & $58.5\%$$\uparrow$ & $38.8\%$$\uparrow$ & $23.4\%$$\uparrow$
+    \\
+    \bottomrule
+    \end{tabular}}
+    \label{tab:main_sim_quant}
+\end{table*}
+
 
 
 \subsection{Datasets \& Benchmark}
