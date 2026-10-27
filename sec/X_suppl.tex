@@ -211,7 +211,7 @@ This matches Eqs.~\ref*{eq:full_forward_model}--\ref*{eq:integrand_phi} of the m
 
 \paragraph{Step 5: Why Direct Simulation is Intractable.}
 
-Directly evaluating Eq.~\ref{APeq:forward_model} requires (i) the continuous per-pixel intensity profiles $\mathbf{I}_{\mathrm{bg}}(t)$ and $\mathbf{I}_{\textcolor{ev_red}{\mathrm{\mathbf{f}}}}(t)$ at every instant to compute the weights $w(t)$, and (ii) access to $\xi_{\mathrm{mix}}$ to model residual effects. In practice, we observe only two discrete event streams without continuous intensity access. This intractability motivates the PNL-ES approximation described in Sec.~\ref*{ssec:simulator} and expanded in the following section.
+Directly evaluating Eq.~\ref{APeq:forward_model} requires (i) the continuous per-pixel intensity profiles $\mathbf{I}_{\mathrm{bg}}(t)$ and $\mathbf{I}_{\textcolor{ev_red}{\mathrm{\mathbf{f}}}}(t)$ at every instant to compute the weights $w_{\mathrm{bg}}(t)$ and $w_{\textcolor{ev_red}{\mathrm{\mathbf{f}}}}(t)$, and (ii) access to $\xi_{\mathrm{mix}}$ to model residual effects. In practice, we observe only two discrete event streams without continuous intensity access. This intractability motivates the PNL-ES approximation described in Sec.~\ref*{ssec:simulator} and expanded in the following section.
 
 
 \subsection{From the Forward Model to PNL-ES}
