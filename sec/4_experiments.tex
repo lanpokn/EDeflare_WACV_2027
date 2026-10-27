@@ -8,7 +8,7 @@ We train our model exclusively on \emph{E-Flare2.7K-train} and test it on \emph{
 
 
 \noindent\textbf{Baselines.}
-No event de-flaring method currently exists. Image-based flare removal methods~\cite{wu2021train,dai2022flare7k,dai2024flare7k++,zhou2023improving} operate on dense frames and are not directly applicable to event streams. We therefore compare with the closest available event artifact filters and controls: \emph{RAW Input}; \emph{Voxel Transform}, a round-trip codec baseline without learned processing; \emph{EFR}~\cite{wang2022linear}, a flicker-removal filter; and \emph{PFD-A}/\emph{PFD-B}~\cite{shi2024polarity}, two denoising and light-interference filters. EFR and PFD are rule based and cannot be trained.
+No event de-flaring method currently exists. Image-based flare removal methods~\cite{wu2021train,dai2022flare7k,dai2024flare7k++,zhou2023improving} operate on dense frames and are not directly applicable to event streams. We therefore compare with the closest available event artifact filters and controls: \emph{RAW Input}; \emph{Voxel Transform}, a round-trip codec baseline without learned processing; \emph{EFR}~\cite{wang2022linear}, a flicker-removal filter; and \emph{PFD-A}/\emph{PFD-B}~\cite{shi2024polarity}, two denoising and light-interference filters. EFR and PFD are rule-based and cannot be trained.
 
 
 \noindent\textbf{Evaluation Protocol.} 
@@ -35,7 +35,7 @@ Table~\ref{tab:main_sim_quant} shows that existing methods are ill-suited for ev
 % To assess real-world generalization, we evaluate the model on our challenging paired dataset. The network is trained \emph{solely} on simulated data, making this a zero-shot sim-to-real evaluation. As shown in Table~\ref{tab:main_real_quant}, the performance trends largely remain consistent. \textbf{E-DeflareNet} significantly outperforms all baselines in most key metrics, such as a $\mathbf{35.6\%}$ improvement in Chamfer distance and a $\mathbf{34.2\%}$ improvement in Gaussian distance over the second-best method. 
 % While TP-F1 shows a slight decrease ($-8.3\%$), this reflects a conservative denoising strategy that prioritizes avoiding the introduction of false events over aggressively recovering every noisy one. This focus on high fidelity is precisely why our method excels on stricter metrics like Chamfer, Gaussian, and R-F1, which more heavily penalize structural distortions and false positives. The strong overall performance demonstrates both the robustness of our model and the effectiveness of our simulation pipeline.
 \noindent\textbf{Evaluation on Paired Real-World Data.}
-Our model, trained \emph{solely} on simulated data, generalizes zero-shot to real-world data. Table~\ref{tab:main_real_quant} shows consistent performance trends. \textbf{E-DeflareNet} significantly outperforms all baselines on most key metrics, such as $\mathbf{35.6\%}$ in Chamfer distance. While TP-F1 shows a slight decrease (-$8.3\%$), this reflects a conservative strategy that prioritizes high fidelity by avoiding false positives over aggressively recovering every noisy event. This trade-off yields superior results on stricter metrics like Chamfer and R-F1. Overall, these results validate model robustness and pipeline effectiveness.
+Our model, trained \emph{solely} on simulated data, generalizes zero-shot to real-world data. Table~\ref{tab:main_real_quant} shows consistent performance trends. \textbf{E-DeflareNet} significantly outperforms all baselines on most key metrics, such as a $\mathbf{35.6\%}$ improvement in Chamfer distance. While TP-F1 decreases slightly (-$8.3\%$), this reflects a conservative strategy that prioritizes high fidelity by avoiding false positives over aggressively recovering every noisy event. This trade-off yields superior results on stricter metrics like Chamfer and R-F1. Overall, these results validate model robustness and pipeline effectiveness.
 
 
 
@@ -154,7 +154,7 @@ We assess the impact of de-flaring on event-to-image reconstruction using SPADE-
     \centering
     \includegraphics[width=\columnwidth]{figures/image_reconstruction.pdf}
     \vspace{-0.65cm}
-    \caption{\textbf{Downstream task comparisons} for event-based imaging. We use SPADE-E2VID~\cite{cadena2021spade} to reconstruct images from both raw and our de-flared event streams on a challenging DSEC scene.}
+    \caption{\textbf{Downstream task comparisons} for event-based imaging. We use SPADE-E2VID~\cite{cadena2021spade} to reconstruct images from both raw and our de-flared event streams on a DSEC-Flare scene.}
     \label{fig:image_reconstruction}
     \vspace{-0.1cm}
 \end{figure}
